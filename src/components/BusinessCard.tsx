@@ -1,14 +1,43 @@
 'use client'
 import Link from 'next/link'
-import { StarIcon, PhoneIcon, MapPinIcon } from 'lucide-react'
+import Image from 'next/image'
+import { StarIcon, PhoneIcon, MapPinIcon, GlobeIcon } from 'lucide-react'
 import type { Business } from '@/services/businesses'
+import { categories } from '@/data/categories'
+
+const categoryIcon: Record<string, string> = {
+  transport: '🚌',
+  sport: '⚽',
+  construction: '🏗️',
+  services: '🛠️',
+}
+
+const subcategoryLabel: Record<string, string> = {
+  taxi: 'Taxi', autocar: 'Autocar', demenagement: 'Déménagement',
+  'transport-marchandises': 'Transport marchandises',
+  gym: 'Gym & Fitness', piscine: 'Piscine', tennis: 'Tennis', football: 'Football',
+  renovation: 'Rénovation', toiture: 'Toiture', electricite: 'Électricité', plomberie: 'Plomberie',
+  nettoyage: 'Nettoyage', securite: 'Sécurité', informatique: 'Informatique', comptabilite: 'Comptabilité',
+}
+
+function getDomain(website?: string): string | null {
+  if (!website) return null
+  try {
+    return new URL(website).hostname.replace('www.', '')
+  } catch {
+    return null
+  }
+}
 
 interface BusinessCardProps {
   business: Business
 }
 
 export default function BusinessCard({ business }: BusinessCardProps) {
-  const { name, slug, shortDescription, category, subcategory, city, phone, rating, reviewCount, featured } = business
+  const { name, slug, shortDescription, category, subcategory, city, phone, rating, reviewCount, featured, imageUrl, website } = business
+  const icon = categoryIcon[category] ?? '🏢'
+  const label = subcategoryLabel[subcategory] ?? subcategory
+  const domain = getDomain(website)
 
   return (
     <Link href={`/company/${slug}`} className="group block">
@@ -20,9 +49,13 @@ export default function BusinessCard({ business }: BusinessCardProps) {
         )}
 
         <div className="flex items-start gap-4">
-          {/* Avatar placeholder */}
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 font-bold text-lg">
-            {name.charAt(0)}
+          {/* Avatar: category image or icon */}
+          <div className="relative h-14 w-14 shrink-0 rounded-xl overflow-hidden bg-blue-50 flex items-center justify-center">
+            {imageUrl ? (
+              <Image src={imageUrl} alt={name} fill className="object-cover" />
+            ) : (
+              <span className="text-2xl">{icon}</span>
+            )}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -31,8 +64,8 @@ export default function BusinessCard({ business }: BusinessCardProps) {
             </h3>
 
             <div className="mt-1 flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
-                {subcategory}
+              <span className="flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
+                {icon} {label}
               </span>
               <span className="flex items-center gap-1 text-xs text-gray-500">
                 <MapPinIcon size={11} />
@@ -42,7 +75,7 @@ export default function BusinessCard({ business }: BusinessCardProps) {
 
             <p className="mt-2 text-sm text-gray-500 line-clamp-2">{shortDescription}</p>
 
-            <div className="mt-3 flex items-center justify-between">
+            <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
               {/* Rating */}
               <div className="flex items-center gap-1">
                 <StarIcon size={14} className="fill-amber-400 text-amber-400" />
@@ -50,16 +83,25 @@ export default function BusinessCard({ business }: BusinessCardProps) {
                 <span className="text-xs text-gray-400">({reviewCount})</span>
               </div>
 
-              {/* Phone */}
-              {phone && (
-                <span
-                  className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <PhoneIcon size={11} />
-                  {phone}
-                </span>
-              )}
+              <div className="flex items-center gap-3">
+                {/* Domain */}
+                {domain && (
+                  <span className="flex items-center gap-1 text-xs text-blue-500">
+                    <GlobeIcon size={11} />
+                    {domain}
+                  </span>
+                )}
+                {/* Phone */}
+                {phone && (
+                  <span
+                    className="flex items-center gap-1 text-xs text-gray-500"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <PhoneIcon size={11} />
+                    {phone}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
