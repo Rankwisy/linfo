@@ -39,8 +39,17 @@ export default async function HomePage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-gradient-to-b from-blue-700 to-blue-600 py-16 px-4 text-white">
-        <div className="mx-auto max-w-4xl text-center">
+      <section
+        className="relative py-16 px-4 text-white"
+        style={{
+          backgroundImage: 'url(https://ik.imagekit.io/9nqnnkvba/linfo.be%20hero%20image.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* dark overlay so text stays readable */}
+        <div className="absolute inset-0 bg-blue-900/60" />
+        <div className="relative mx-auto max-w-4xl text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
             Trouvez les meilleures entreprises{' '}
             <span className="text-yellow-300">en Belgique</span>
