@@ -1,24 +1,25 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
+import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import Sidebar from '@/components/Sidebar'
-import BusinessList from '@/components/BusinessList'
+import BusinessCard from '@/components/BusinessCard'
+import { silos, siloSlugs, getSiloBySlug } from '@/data/silos'
+import { cities, getCityBySlug } from '@/data/cities'
 import {
-  getAllSeoPageSlugs,
+  getTopBusinessesForSilo,
+  getBusinessCountsBySiloForCity,
   parseSeoSlug,
-  getBusinessesForCategoryCity,
-  getBusinessesForSubcategoryCity,
 } from '@/services/businesses'
-import { getCategoryBySlug, getSubcategoryBySlug } from '@/data/categories'
-import { getCityBySlug } from '@/data/cities'
-import Link from 'next/link'
 
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const slugs = getAllSeoPageSlugs()
-  return slugs.map((slug) => ({ slug }))
+  // All city slugs + all silo slugs
+  const params: { slug: string }[] = []
+  for (const city of cities) params.push({ slug: city.slug })
+  for (const silo of silos) params.push({ slug: silo.slug })
+  return params
 }
 
 interface PageProps {
@@ -27,265 +28,225 @@ interface PageProps {
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { slug } = await props.params
-  const parsed = parseSeoSlug(slug)
-  if (!parsed) return {}
 
-  const city = getCityBySlug(parsed.citySlug)
-
-  if (parsed.type === 'category-city') {
-    const cat = getCategoryBySlug(parsed.categorySlug)
-    if (!cat || !city) return {}
+  const city = getCityBySlug(slug)
+  if (city) {
     return {
-      title: `${cat.name} à ${city.name} — Annuaire linfo.be`,
-      description: `Trouvez les meilleures entreprises de ${cat.name.toLowerCase()} à ${city.name}. Liste complète avec contacts, avis et informations.`,
+      title: `Entreprises à ${city.name} — Annuaire linfo.be`,
+      description: `Trouvez les meilleures entreprises locales à ${city.name} : transport, sport, construction, services et plus encore.`,
       alternates: { canonical: `https://linfo.be/${slug}` },
-      openGraph: {
-        title: `${cat.name} à ${city.name}`,
-        description: `Annuaire des professionnels de ${cat.name.toLowerCase()} à ${city.name}, Belgique.`,
-        url: `https://linfo.be/${slug}`,
-      },
     }
   }
 
-  const sub = getSubcategoryBySlug(parsed.subcategorySlug!)
-  if (!sub || !city) return {}
-  return {
-    title: `${sub.subcategory.name} à ${city.name} — Annuaire linfo.be`,
-    description: `${sub.subcategory.description} Retrouvez tous les prestataires de ${sub.subcategory.name.toLowerCase()} à ${city.name}.`,
-    alternates: { canonical: `https://linfo.be/${slug}` },
-    openGraph: {
-      title: `${sub.subcategory.name} à ${city.name}`,
-      description: sub.subcategory.description,
-      url: `https://linfo.be/${slug}`,
-    },
+  const silo = getSiloBySlug(slug)
+  if (silo) {
+    return {
+      title: `${silo.name} en Belgique — Annuaire linfo.be`,
+      description: silo.description,
+      alternates: { canonical: `https://linfo.be/${slug}` },
+    }
   }
+
+  return {}
 }
 
-// SEO content blocks per category-city combo
-const seoContent: Record<string, { h1: string; intro: string; body: string }> = {
-  'transport-bruxelles': {
-    h1: 'Transport à Bruxelles',
-    intro: 'Bruxelles, capitale de la Belgique et siège des institutions européennes, dispose d\'un réseau de transport dense et varié.',
-    body: `La Région de Bruxelles-Capitale propose une multitude de solutions de transport pour répondre aux besoins des habitants, des navetteurs et des touristes. Que vous cherchiez un taxi pour un trajet rapide, un autocar pour un voyage de groupe ou un service de déménagement fiable, l'annuaire linfo.be recense les meilleurs professionnels du secteur.
-
-Le réseau de transport public bruxellois, géré par la STIB, complète parfaitement l'offre des prestataires privés. Pour les déplacements interurbains ou les transferts vers l'aéroport de Bruxelles-Zaventem, les compagnies d'autocar et de taxi référencées sur notre plateforme offrent des solutions souples et adaptées.
-
-Les entreprises de transport bruxelloises se distinguent par leur professionnalisme et leur connaissance du tissu urbain local. Qu'il s'agisse de transport de personnes ou de marchandises, vous trouverez sur linfo.be des prestataires certifiés, évalués par leurs clients.`,
-  },
-  'autocar-bruxelles': {
-    h1: 'Location d\'autocar à Bruxelles',
-    intro: 'Besoin d\'un autocar à Bruxelles ? Retrouvez tous les loueurs d\'autocars et services de transport de groupe dans la capitale belge.',
-    body: `La location d'autocar à Bruxelles répond à de nombreux besoins : excursions scolaires, événements d'entreprise, voyages touristiques, transferts aéroport ou déplacements sportifs. Les entreprises spécialisées que vous trouverez sur linfo.be disposent de flottes modernes, allant des minibus de 8 places aux grands autocars de 55 places.
-
-Louer un autocar à Bruxelles présente de nombreux avantages. Vous déléguez entièrement la logistique à des professionnels, évitez les problèmes de stationnement en ville et garantissez le confort de vos passagers. Les tarifs sont généralement calculés à la journée ou à la prestation, selon la taille du véhicule et la distance parcourue.
-
-Pour obtenir le meilleur tarif, pensez à réserver à l'avance, notamment pour les périodes de haute saison (été, fêtes de fin d'année). N'hésitez pas à demander plusieurs devis aux entreprises listées sur notre annuaire et à comparer les prestations incluses.`,
-  },
-  'taxi-bruxelles': {
-    h1: 'Taxi à Bruxelles',
-    intro: 'Trouvez votre taxi à Bruxelles : services disponibles 24h/24 et 7j/7 dans toute la capitale belge et ses environs.',
-    body: `Le secteur du taxi à Bruxelles est réglementé par la Région de Bruxelles-Capitale, garantissant des standards de qualité et de sécurité élevés. Tous les chauffeurs de taxi référencés sur linfo.be disposent des autorisations requises et ont suivi les formations obligatoires.
-
-Que vous ayez besoin d'un taxi pour un transfert vers l'aéroport de Zaventem ou Brussels South Charleroi Airport, pour un rendez-vous professionnel ou une sortie nocturne, les compagnies bruxelloises sont à votre disposition. La plupart proposent la réservation en ligne ou par téléphone, avec confirmation immédiate.
-
-Les tarifs des taxis bruxellois sont réglementés : un prix de prise en charge fixe, un tarif kilométrique et des suppléments éventuels (aéroport, nuit, bagages). La majorité des taxis acceptent désormais le paiement par carte bancaire, rendant vos déplacements encore plus pratiques.`,
-  },
-  'sport-bruxelles': {
-    h1: 'Sport à Bruxelles',
-    intro: 'Découvrez les meilleurs clubs sportifs, salles de fitness et infrastructures sportives à Bruxelles.',
-    body: `Bruxelles offre une infrastructure sportive remarquable, avec des dizaines de salles de sport, piscines, clubs de tennis, stades de football et bien d'autres équipements répartis dans les 19 communes de la Région. Que vous soyez un sportif amateur ou un athlète confirmé, la capitale belge dispose des ressources pour satisfaire votre passion.
-
-Le sport à Bruxelles est accessible à tous les niveaux et tous les budgets. Des grandes chaînes de fitness comme Basic-Fit aux salles boutique spécialisées en CrossFit ou yoga, l'offre est aussi variée que diverse. Les clubs sportifs associatifs proposent quant à eux des tarifs attractifs, notamment pour les jeunes et les familles.
-
-Les autorités bruxelloises investissent régulièrement dans les infrastructures sportives publiques : piscines communales, terrains de football synthétiques, pistes d'athlétisme. Ces équipements, gérés par les communes ou par la Région, sont accessibles à des tarifs préférentiels pour les résidents.`,
-  },
-  'gym-bruxelles': {
-    h1: 'Salle de sport et fitness à Bruxelles',
-    intro: 'Trouvez la meilleure salle de gym à Bruxelles : centres de fitness, clubs de musculation et cours collectifs dans toute la capitale.',
-    body: `Le marché du fitness à Bruxelles est en pleine expansion, avec l'émergence de nouveaux concepts de salles de sport qui répondent à des attentes de plus en plus diversifiées. Des grandes enseignes low-cost aux studios premium, chaque bruxellois peut trouver la formule qui correspond à ses objectifs et à son budget.
-
-Les salles de fitness modernes à Bruxelles proposent bien plus que des machines de musculation. Les cours collectifs sont au cœur de l'offre : yoga, pilates, HIIT, spinning, zumba, boxe fitness... La plupart des établissements emploient des coachs diplômés capables de vous accompagner dans l'atteinte de vos objectifs, qu'il s'agisse de perte de poids, de prise de masse ou d'amélioration de votre condition physique générale.
-
-Avant de vous engager, visitez plusieurs salles et renseignez-vous sur les conditions d'abonnement. De nombreux clubs proposent un premier cours ou une séance d'essai gratuite. Comparez les équipements disponibles, les horaires d'ouverture, la proximité avec votre domicile ou lieu de travail, et bien sûr les tarifs.`,
-  },
-}
-
-export default async function SeoPage(props: PageProps) {
+export default async function SlugPage(props: PageProps) {
   const { slug } = await props.params
-  const parsed = parseSeoSlug(slug)
 
-  if (!parsed) notFound()
+  // City hub page
+  const city = getCityBySlug(slug)
+  if (city) {
+    const counts = await getBusinessCountsBySiloForCity(slug)
 
-  const city = getCityBySlug(parsed.citySlug)
-  if (!city) notFound()
+    return (
+      <>
+        <Navbar />
 
-  let pageTitle = ''
-  const categorySlug = parsed.categorySlug
-  let subcategorySlug: string | undefined
-
-  let businesses: import('@/services/businesses').Business[] = []
-
-  if (parsed.type === 'category-city') {
-    const cat = getCategoryBySlug(parsed.categorySlug)
-    if (!cat) notFound()
-    pageTitle = `${cat.name} à ${city.name}`
-    businesses = await getBusinessesForCategoryCity(parsed.categorySlug, parsed.citySlug)
-  } else {
-    const sub = getSubcategoryBySlug(parsed.subcategorySlug!)
-    if (!sub) notFound()
-    subcategorySlug = parsed.subcategorySlug
-    pageTitle = `${sub.subcategory.name} à ${city.name}`
-    businesses = await getBusinessesForSubcategoryCity(parsed.subcategorySlug!, parsed.citySlug)
-  }
-
-  const content = seoContent[slug] || {
-    h1: pageTitle,
-    intro: `Retrouvez les meilleures entreprises pour ${pageTitle.toLowerCase()} sur linfo.be, l'annuaire local de référence en Belgique.`,
-    body: `Notre annuaire recense les professionnels vérifiés pour ${pageTitle.toLowerCase()}. Comparez les entreprises, consultez les avis clients et contactez directement les prestataires qui correspondent à vos besoins.`,
-  }
-
-  // Build structured data
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: content.h1,
-    description: content.intro,
-    numberOfItems: businesses.length,
-    itemListElement: businesses.map((b, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'LocalBusiness',
-        name: b.name,
-        description: b.shortDescription,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: city.name,
-          addressCountry: 'BE',
-        },
-        telephone: b.phone,
-      },
-    })),
-  }
-
-  // Related subcategories for internal linking
-  const cat = getCategoryBySlug(categorySlug)
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      <Navbar />
-
-      {/* Breadcrumb + Header */}
-      <div className="border-b border-gray-100 bg-white px-4 py-4">
-        <div className="mx-auto max-w-7xl">
-          <nav className="mb-2 flex gap-2 text-sm text-gray-400" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-blue-600">Accueil</Link>
-            <span>/</span>
-            {parsed.type === 'subcategory-city' && (
-              <>
-                <Link href={`/${categorySlug}-${parsed.citySlug}`} className="hover:text-blue-600 capitalize">
-                  {cat?.name}
-                </Link>
-                <span>/</span>
-              </>
-            )}
-            <span className="text-gray-700">{pageTitle}</span>
-          </nav>
-        </div>
-      </div>
-
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[280px_1fr]">
-          {/* Sidebar */}
-          <Sidebar
-            activeCategorySlug={categorySlug}
-            activeSubcategorySlug={subcategorySlug}
-            activeCitySlug={parsed.citySlug}
-          />
-
-          {/* Main content */}
-          <div>
-            {/* H1 + intro */}
-            <div className="mb-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{content.h1}</h1>
-              <p className="mt-3 text-gray-600">{content.intro}</p>
-            </div>
-
-            {/* Business listings */}
-            <div className="mb-8">
-              <p className="mb-4 text-sm text-gray-500">
-                {businesses.length} entreprise{businesses.length !== 1 ? 's' : ''} trouvée{businesses.length !== 1 ? 's' : ''}
-              </p>
-              <BusinessList businesses={businesses} />
-            </div>
-
-            {/* SEO text */}
-            <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-xl font-semibold text-gray-900">
-                Tout savoir sur {content.h1.toLowerCase()}
-              </h2>
-              {content.body.split('\n\n').map((para, i) => (
-                <p key={i} className="mb-4 text-sm leading-relaxed text-gray-600 last:mb-0">
-                  {para.trim()}
-                </p>
-              ))}
-            </div>
-
-            {/* Internal links */}
-            {cat && (
-              <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-                <h3 className="mb-4 font-semibold text-gray-900">
-                  Sous-catégories de {cat.name} à {city.name}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {cat.subcategories.map((sub) => (
-                    <Link
-                      key={sub.slug}
-                      href={`/${sub.slug}-${parsed.citySlug}`}
-                      className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                        subcategorySlug === sub.slug
-                          ? 'border-blue-600 bg-blue-600 text-white'
-                          : 'border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-600'
-                      }`}
-                    >
-                      {sub.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* City links */}
-            <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-              <h3 className="mb-4 font-semibold text-gray-900">
-                {content.h1.split(' à ')[0]} dans d&apos;autres villes
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {['bruxelles', 'anvers', 'gand', 'liege'].map((citySlug) => (
-                  <Link
-                    key={citySlug}
-                    href={`/${subcategorySlug || categorySlug}-${citySlug}`}
-                    className={`rounded-full border px-3 py-1.5 text-sm transition-colors capitalize ${
-                      parsed.citySlug === citySlug
-                        ? 'border-blue-600 bg-blue-600 text-white'
-                        : 'border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-600'
-                    }`}
-                  >
-                    {citySlug === 'bruxelles' ? 'Bruxelles' : citySlug === 'anvers' ? 'Anvers' : citySlug === 'gand' ? 'Gand' : 'Liège'}
-                  </Link>
-                ))}
-              </div>
-            </div>
+        {/* Hero */}
+        <div className="border-b border-gray-100 bg-gradient-to-br from-blue-600 to-blue-800 px-4 py-12 text-white">
+          <div className="mx-auto max-w-5xl">
+            <p className="mb-2 text-sm text-blue-200 uppercase tracking-wider">Annuaire local</p>
+            <h1 className="text-4xl font-extrabold mb-3">Entreprises à {city.name}</h1>
+            <p className="max-w-2xl text-blue-100">{city.description}</p>
           </div>
         </div>
-      </main>
 
-      <Footer />
-    </>
-  )
+        <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+          {/* Breadcrumb */}
+          <nav className="mb-8 flex gap-2 text-sm text-gray-400" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-blue-600">Accueil</Link>
+            <span>/</span>
+            <span className="text-gray-700">{city.name}</span>
+          </nav>
+
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Parcourir par secteur</h2>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {silos.map((silo) => (
+              <Link
+                key={silo.slug}
+                href={`/${slug}/${silo.slug}`}
+                className="group flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:border-blue-200 hover:shadow-md"
+              >
+                <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl ${silo.bgColor}`}>
+                  {silo.icon}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    {silo.name}
+                  </h3>
+                  {counts[silo.slug] != null && counts[silo.slug] > 0 ? (
+                    <p className="text-xs text-gray-500 mt-0.5">{counts[silo.slug]} entreprise{counts[silo.slug] > 1 ? 's' : ''}</p>
+                  ) : (
+                    <p className="text-xs text-gray-400 mt-0.5">{silo.subcategories.length} sous-catégories</p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Other cities */}
+          <div className="mt-12 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <h2 className="mb-4 font-semibold text-gray-900">Autres villes en Belgique</h2>
+            <div className="flex flex-wrap gap-2">
+              {cities.filter((c) => c.slug !== slug).map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/${c.slug}`}
+                  className="rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-600 hover:border-blue-300 hover:text-blue-600 transition-colors"
+                >
+                  📍 {c.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    )
+  }
+
+  // Silo hub page
+  const silo = getSiloBySlug(slug)
+  if (silo) {
+    const topBusinesses = await getTopBusinessesForSilo(slug, 6)
+
+    return (
+      <>
+        <Navbar />
+
+        {/* Hero */}
+        <div className={`border-b px-4 py-12 ${silo.bgColor}`}>
+          <div className="mx-auto max-w-5xl">
+            <p className="mb-2 text-sm text-gray-500 uppercase tracking-wider">Secteur</p>
+            <div className="flex items-center gap-4 mb-3">
+              <span className="text-5xl">{silo.icon}</span>
+              <h1 className={`text-4xl font-extrabold ${silo.color}`}>{silo.name}</h1>
+            </div>
+            <p className="max-w-2xl text-gray-600">{silo.description}</p>
+          </div>
+        </div>
+
+        <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+          {/* Breadcrumb */}
+          <nav className="mb-8 flex gap-2 text-sm text-gray-400" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-blue-600">Accueil</Link>
+            <span>/</span>
+            <span className="text-gray-700">{silo.name}</span>
+          </nav>
+
+          {/* Subcategories */}
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 mb-5">Sous-catégories</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {silo.subcategories.map((sub) => (
+                <Link
+                  key={sub.slug}
+                  href={`/${slug}/${sub.slug}`}
+                  className="group flex items-start gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm hover:border-blue-200 hover:shadow-md transition-all"
+                >
+                  <span className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm ${silo.bgColor} ${silo.color} font-bold`}>
+                    {sub.name.charAt(0)}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{sub.name}</p>
+                    <p className="text-sm text-gray-500">{sub.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* By city */}
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 mb-5">{silo.name} par ville</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {cities.map((city) => (
+                <Link
+                  key={city.slug}
+                  href={`/${city.slug}/${slug}`}
+                  className="rounded-xl border border-gray-100 bg-white p-4 text-center shadow-sm hover:border-blue-200 hover:shadow-md transition-all"
+                >
+                  <p className="text-2xl mb-1">📍</p>
+                  <p className="font-semibold text-gray-900 hover:text-blue-600 transition-colors">{city.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{city.region}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* Top businesses (if DB data exists) */}
+          {topBusinesses.length > 0 && (
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-5">Meilleures entreprises</h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {topBusinesses.map((b) => (
+                  <BusinessCard key={b.objectID} business={b} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* SEO text */}
+          <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Tout savoir sur {silo.name} en Belgique
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-3">
+              {silo.description} Retrouvez sur linfo.be l&apos;annuaire complet des professionnels
+              du secteur <strong>{silo.name}</strong> en Belgique. Comparez les prestataires,
+              consultez les avis clients et contactez directement les entreprises qui correspondent
+              à vos besoins.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              Que vous soyez à Bruxelles, Anvers, Gand ou Liège, notre annuaire recense les
+              meilleurs professionnels de {silo.name.toLowerCase()} avec leurs coordonnées
+              complètes, notes et descriptions détaillées.
+            </p>
+          </div>
+
+          {/* Internal links to other silos */}
+          <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <h3 className="font-semibold text-gray-900 mb-4">Autres secteurs</h3>
+            <div className="flex flex-wrap gap-2">
+              {silos.filter((s) => s.slug !== slug).slice(0, 8).map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/${s.slug}`}
+                  className="flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-1.5 text-sm text-gray-600 hover:border-blue-300 hover:text-blue-600 transition-colors"
+                >
+                  {s.icon} {s.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    )
+  }
+
+  notFound()
 }

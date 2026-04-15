@@ -1,6 +1,7 @@
 import { supabase, type BusinessRow } from '@/lib/supabase'
 import { categories } from '../data/categories'
 import { cities as citiesData } from '../data/cities'
+import { getSiloBySlug, getSiloSubcategoryInSilo, activeSilos, type Silo } from '../data/silos'
 
 export interface Business {
   objectID: string
@@ -129,6 +130,61 @@ export async function getAllBusinessSlugs(): Promise<string[]> {
     .select('slug')
   if (error) { console.error(error); return [] }
   return (data as { slug: string }[]).map((r) => r.slug)
+}
+
+// Query businesses for a silo + city (uses silo's dbCategory)
+export async function getBusinessesForSiloCity(
+  siloSlug: string,
+  citySlug: string
+): Promise<Business[]> {
+  const silo = getSiloBySlug(siloSlug)
+  if (!silo?.dbCategory) return []
+  return getBusinessesForCategoryCity(silo.dbCategory, citySlug)
+}
+
+// Query businesses for a silo subcategory + city (uses subcategory's dbSubcategory)
+export async function getBusinessesForSiloSubcategoryCity(
+  siloSlug: string,
+  subSlug: string,
+  citySlug: string
+): Promise<Business[]> {
+  const sub = getSiloSubcategoryInSilo(siloSlug, subSlug)
+  if (!sub?.dbSubcategory) return []
+  return getBusinessesForSubcategoryCity(sub.dbSubcategory, citySlug)
+}
+
+// Get top businesses for a silo across all cities
+export async function getTopBusinessesForSilo(
+  siloSlug: string,
+  limit = 6
+): Promise<Business[]> {
+  const silo = getSiloBySlug(siloSlug)
+  if (!silo?.dbCategory) return []
+  const { data, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('category', silo.dbCategory)
+    .order('rating', { ascending: false })
+    .limit(limit)
+  if (error) { console.error(error); return [] }
+  return (data as BusinessRow[]).map(rowToBusiness)
+}
+
+// Get business counts per silo for a given city
+export async function getBusinessCountsBySiloForCity(
+  citySlug: string
+): Promise<Record<string, number>> {
+  const counts: Record<string, number> = {}
+  for (const silo of activeSilos) {
+    if (!silo.dbCategory) continue
+    const { count, error } = await supabase
+      .from('businesses')
+      .select('*', { count: 'exact', head: true })
+      .eq('category', silo.dbCategory)
+      .eq('city', citySlug)
+    if (!error) counts[silo.slug] = count ?? 0
+  }
+  return counts
 }
 
 // Generate all valid category-city and subcategory-city slug combos

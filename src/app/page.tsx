@@ -23,12 +23,12 @@ export const metadata: Metadata = {
 }
 
 const popularSearches = [
-  { label: 'Taxi Bruxelles', href: '/taxi-bruxelles' },
-  { label: 'Autocar Bruxelles', href: '/autocar-bruxelles' },
-  { label: 'Gym Bruxelles', href: '/gym-bruxelles' },
-  { label: 'Déménagement Bruxelles', href: '/demenagement-bruxelles' },
-  { label: 'Transport Anvers', href: '/transport-anvers' },
-  { label: 'Sport Gand', href: '/sport-gand' },
+  { label: 'Taxi Bruxelles', href: '/bruxelles/automobile-transport/taxi' },
+  { label: 'Autocar Bruxelles', href: '/bruxelles/automobile-transport/location-autocar' },
+  { label: 'Gym Bruxelles', href: '/bruxelles/sport-loisirs/gym-fitness' },
+  { label: 'Déménagement Bruxelles', href: '/bruxelles/automobile-transport/demenagement' },
+  { label: 'Transport Anvers', href: '/anvers/automobile-transport' },
+  { label: 'Sport Gand', href: '/gand/sport-loisirs' },
 ]
 
 export default async function HomePage() {
@@ -80,11 +80,16 @@ export default async function HomePage() {
         <section className="py-12">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-900">Parcourir par catégorie</h2>
-            <Link href="/transport-bruxelles" className="text-sm font-medium text-blue-600 hover:underline">
+            <Link href="/bruxelles" className="text-sm font-medium text-blue-600 hover:underline">
               Voir tout →
             </Link>
           </div>
           <CategoryGrid citySlug="bruxelles" />
+          <div className="mt-4 text-center">
+            <a href="/bruxelles" className="text-sm font-medium text-blue-600 hover:underline">
+              Voir toutes les catégories à Bruxelles →
+            </a>
+          </div>
         </section>
 
         {/* Featured businesses */}
@@ -114,18 +119,18 @@ export default async function HomePage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Recherches fréquentes</h2>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { label: 'Transport Bruxelles', href: '/transport-bruxelles' },
-              { label: 'Autocar Bruxelles', href: '/autocar-bruxelles' },
-              { label: 'Taxi Bruxelles', href: '/taxi-bruxelles' },
-              { label: 'Sport Bruxelles', href: '/sport-bruxelles' },
-              { label: 'Gym Bruxelles', href: '/gym-bruxelles' },
-              { label: 'Piscine Bruxelles', href: '/piscine-bruxelles' },
-              { label: 'Construction Bruxelles', href: '/construction-bruxelles' },
-              { label: 'Rénovation Bruxelles', href: '/renovation-bruxelles' },
-              { label: 'Services Bruxelles', href: '/services-bruxelles' },
-              { label: 'Transport Anvers', href: '/transport-anvers' },
-              { label: 'Sport Gand', href: '/sport-gand' },
-              { label: 'Services Liège', href: '/services-liege' },
+              { label: 'Transport Bruxelles', href: '/bruxelles/automobile-transport' },
+              { label: 'Autocar Bruxelles', href: '/bruxelles/automobile-transport/location-autocar' },
+              { label: 'Taxi Bruxelles', href: '/bruxelles/automobile-transport/taxi' },
+              { label: 'Sport Bruxelles', href: '/bruxelles/sport-loisirs' },
+              { label: 'Gym Bruxelles', href: '/bruxelles/sport-loisirs/gym-fitness' },
+              { label: 'Piscine Bruxelles', href: '/bruxelles/sport-loisirs/piscine' },
+              { label: 'Construction Bruxelles', href: '/bruxelles/immobilier-construction' },
+              { label: 'Rénovation Bruxelles', href: '/bruxelles/immobilier-construction/renovation' },
+              { label: 'Services Bruxelles', href: '/bruxelles/services-professionnels' },
+              { label: 'Transport Anvers', href: '/anvers/automobile-transport' },
+              { label: 'Sport Gand', href: '/gand/sport-loisirs' },
+              { label: 'Services Liège', href: '/liege/services-professionnels' },
             ].map((item) => (
               <Link
                 key={item.href}
