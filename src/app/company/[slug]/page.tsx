@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { StarIcon, PhoneIcon, MailIcon, GlobeIcon, MapPinIcon } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -109,6 +110,20 @@ export default async function CompanyPage(props: PageProps) {
         </div>
       </div>
 
+      {/* Hero image */}
+      {business.imageUrl && (
+        <div className="relative h-56 w-full sm:h-72 overflow-hidden bg-gray-100">
+          <Image
+            src={business.imageUrl}
+            alt={business.name}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </div>
+      )}
+
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
           {/* Left: Main info */}
@@ -116,8 +131,20 @@ export default async function CompanyPage(props: PageProps) {
             {/* Business header card */}
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="flex items-start gap-4">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white font-bold text-2xl">
-                  {business.name.charAt(0)}
+                {/* Avatar: image thumbnail or letter fallback */}
+                <div className="relative h-16 w-16 shrink-0 rounded-2xl overflow-hidden bg-blue-100">
+                  {business.imageUrl ? (
+                    <Image
+                      src={business.imageUrl}
+                      alt={business.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center bg-blue-600 text-white font-bold text-2xl">
+                      {business.name.charAt(0)}
+                    </span>
+                  )}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-4 flex-wrap">
