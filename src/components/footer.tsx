@@ -1,164 +1,126 @@
 'use client'
-import {
-  ArrowUp,
-  EarthIcon,
-  FacebookIcon,
-  LinkedinIcon,
-  TwitterIcon,
-} from 'lucide-react'
+import { ArrowUp, MapPinIcon } from 'lucide-react'
+import Link from 'next/link'
 
-const socialLinks = [
-  {
-    name: 'LinkedIn',
-    link: '/',
-    icon: <LinkedinIcon className="size-6" />,
-  },
-  {
-    name: 'X',
-    link: '/',
-    icon: <TwitterIcon className="size-6" />,
-  },
-  {
-    name: 'Facebook',
-    link: '/',
-    icon: <FacebookIcon className="size-6" />,
-  },
-  {
-    name: 'Website',
-    link: '/',
-    icon: <EarthIcon className="size-6" />,
-  },
+const categories = [
+  { label: 'Transport Bruxelles', href: '/transport-bruxelles' },
+  { label: 'Sport Bruxelles', href: '/sport-bruxelles' },
+  { label: 'Construction Bruxelles', href: '/construction-bruxelles' },
+  { label: 'Services Bruxelles', href: '/services-bruxelles' },
 ]
 
-const support = {
-  title: 'Support',
-  items: [
-    { label: 'Contact', href: '' },
-    { label: 'FAQs', href: '' },
-    { label: 'Pricing Plans', href: '' },
-    { label: 'Sitemap', href: '' },
-  ],
-}
+const cities = [
+  { label: 'Bruxelles', href: '/transport-bruxelles' },
+  { label: 'Anvers', href: '/transport-anvers' },
+  { label: 'Gand', href: '/transport-gand' },
+  { label: 'Liège', href: '/transport-liege' },
+]
 
-const quickLinks = {
-  title: 'Quick Links',
-  items: [
-    { label: 'Jobs', href: '' },
-    { label: 'Courses', href: '' },
-    { label: 'Paid Training', href: '' },
-    { label: 'Blog', href: '' },
-  ],
-}
-
-const category = {
-  title: 'Category',
-  items: [
-    { label: 'Graphics', href: '' },
-    { label: 'Programming', href: '' },
-    { label: 'eCommerce', href: '' },
-    { label: 'Freelancing', href: '' },
-  ],
-}
-
-const contact = {
-  address: '4517 Washington Ave. Manchester, Kentucky 39495',
-  phone: 'Phone: (405) 555-0128',
-  email: 'info@learningonline.com',
-}
+const topSearches = [
+  { label: 'Taxi Bruxelles', href: '/taxi-bruxelles' },
+  { label: 'Autocar Bruxelles', href: '/autocar-bruxelles' },
+  { label: 'Gym Bruxelles', href: '/gym-bruxelles' },
+  { label: 'Déménagement Bruxelles', href: '/demenagement-bruxelles' },
+]
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <footer className="bg-[#191F33]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="grid gap-6 py-16 sm:grid-cols-[40fr_30fr_30fr] md:grid-cols-[40fr_30fr_30fr_30fr]">
-          <div className="">
-            <a href="/" className="mb-8 flex items-center gap-5 text-white">
-              <img
-                src="https://res.cloudinary.com/dyvkdwzcj/image/upload/v1709055594/logo-1_vo1dni.png"
-                className="h-8"
-                alt="Logo"
-              />
-              <h6 className="text-3xl font-semibold tracking-wider">Nextory</h6>
-            </a>
-            <address className="mt-3 text-base font-normal text-[#767E94]">
-              <p className="mt-3 max-w-64">{contact.address}</p>
-              <p className="mt-3">{contact.phone}</p>
-              <p className="mt-3">Mail: {contact.email}</p>
-            </address>
-          </div>
+    <footer className="bg-gray-900 text-gray-300">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Brand */}
           <div>
-            <h6 className="mb-7 text-xl text-white">{support.title}</h6>
-            <ul>
-              {support.items.map(({ label, href }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] transition-all duration-150 ease-in hover:text-white hover:underline hover:decoration-[#00AAFF] hover:underline-offset-8"
-                >
-                  <a href={href}>{label}</a>
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600">
+                <MapPinIcon size={16} color="white" />
+              </div>
+              <span className="text-xl font-bold text-white tracking-tight">
+                linfo<span className="text-blue-400">.be</span>
+              </span>
+            </Link>
+            <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
+              L&apos;annuaire des entreprises locales en Belgique. Trouvez rapidement les meilleurs prestataires près de chez vous.
+            </p>
+          </div>
+
+          {/* Categories */}
+          <div>
+            <h6 className="mb-4 font-semibold text-white">Catégories</h6>
+            <ul className="space-y-2.5">
+              {categories.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* Cities */}
           <div>
-            <h6 className="mb-7 text-xl text-white">{quickLinks.title}</h6>
-            <ul>
-              {quickLinks.items.map(({ label, href }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] transition-all duration-150 ease-in hover:text-white hover:underline hover:decoration-[#00AAFF] hover:underline-offset-8"
-                >
-                  <a href={href}>{label}</a>
+            <h6 className="mb-4 font-semibold text-white">Villes</h6>
+            <ul className="space-y-2.5">
+              {cities.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* Top searches */}
           <div>
-            <h6 className="mb-7 text-xl text-white">{category.title}</h6>
-            <ul>
-              {category.items.map(({ label, href }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] transition-all duration-150 ease-in hover:text-white hover:underline hover:decoration-[#00AAFF] hover:underline-offset-8"
-                >
-                  <a href={href}>{label}</a>
+            <h6 className="mb-4 font-semibold text-white">Recherches populaires</h6>
+            <ul className="space-y-2.5">
+              {topSearches.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-      <div className="relative bg-[#2E3447]">
+
+      <div className="relative border-t border-gray-800 bg-gray-900">
         <button
           onClick={scrollToTop}
-          className="absolute -top-7 right-8 flex size-14 items-center justify-center rounded-full border-[6px] border-[#191F33] bg-[#00AAFF] md:right-16"
+          aria-label="Retour en haut"
+          className="absolute -top-5 right-8 flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 shadow-lg hover:bg-blue-500 transition-colors md:right-16"
         >
-          <ArrowUp color="#fff" size={22} />
+          <ArrowUp color="#fff" size={18} />
         </button>
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-[26px] md:flex-row md:justify-between">
-          <p className="text-center text-[#767E94]">
-            Learning Online © 2024. Developed by{' '}
-            <span className="text-white">Abdul Basit</span>
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 py-5 md:flex-row md:justify-between">
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} linfo.be — L&apos;annuaire local de Belgique
           </p>
-          <ul className="flex items-center gap-6">
-            {socialLinks.map(({ name, icon, link }) => (
-              <li key={name}>
-                <a
-                  href={link}
-                  title={name}
-                  className="text-[#767E94] hover:text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {icon}
-                </a>
-                <span className="sr-only">{name} account</span>
-              </li>
-            ))}
-          </ul>
+          <div className="flex gap-4 text-sm">
+            <Link href="/sitemap.xml" className="text-gray-500 hover:text-gray-300 transition-colors">
+              Sitemap
+            </Link>
+            <Link href="#" className="text-gray-500 hover:text-gray-300 transition-colors">
+              Politique de confidentialité
+            </Link>
+            <Link href="#" className="text-gray-500 hover:text-gray-300 transition-colors">
+              Contact
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

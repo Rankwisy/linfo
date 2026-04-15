@@ -1,75 +1,77 @@
 'use client'
-import { CircleFadingPlus, MenuIcon, XIcon } from 'lucide-react'
+import { MenuIcon, XIcon, MapPinIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
 const navLinks = [
-  { title: 'Tools', link: '#' },
-  { title: 'Blog', link: '#' },
-  { title: 'Contact', link: '#' },
-  { title: 'About', link: '#' },
+  { title: 'Transport', link: '/transport-bruxelles' },
+  { title: 'Sport', link: '/sport-bruxelles' },
+  { title: 'Construction', link: '/construction-bruxelles' },
+  { title: 'Services', link: '/services-bruxelles' },
 ]
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
 
-  const handleShowNav = () => {
-    setShowNav(!showNav)
-  }
-
   return (
-    <nav className="relative z-20 bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between bg-white px-2 py-2 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-4 sm:gap-10">
-          {/* hamburger menu or cross icon */}
+    <nav className="relative z-20 bg-white border-b border-gray-100 shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-6">
+          {/* Hamburger */}
           <button
-            onClick={handleShowNav}
+            onClick={() => setShowNav(!showNav)}
             aria-label="Toggle Menu"
             className="md:hidden"
           >
             {showNav ? (
-              <XIcon color="#202020" strokeWidth={3} size={25} />
+              <XIcon color="#202020" strokeWidth={2.5} size={24} />
             ) : (
-              <MenuIcon color="#202020" strokeWidth={3} size={25} />
+              <MenuIcon color="#202020" strokeWidth={2.5} size={24} />
             )}
           </button>
-          {/* logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <img
-              src="https://res.cloudinary.com/dyvkdwzcj/image/upload/v1709055594/logo-1_vo1dni.png"
-              className="h-8"
-              alt="Logo"
-            />
-            <span className="self-center whitespace-nowrap text-xl font-semibold text-stone-900 md:text-2xl">
-              Nextory
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600">
+              <MapPinIcon size={18} color="white" />
+            </div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">
+              linfo<span className="text-blue-600">.be</span>
             </span>
           </Link>
-          {/* nav links */}
+
+          {/* Nav links */}
           <div
-            className={`absolute left-0 right-0 -z-10 flex w-full flex-col gap-3 bg-white p-3 shadow transition-all duration-300 ease-in-out md:relative md:left-0 md:right-auto md:top-auto md:z-auto md:flex-row md:shadow-none ${
-              showNav ? 'top-[54px]' : 'top-[-165px]'
+            className={`absolute left-0 right-0 -z-10 flex w-full flex-col gap-1 bg-white px-4 py-3 shadow-lg transition-all duration-300 ease-in-out md:relative md:left-0 md:right-auto md:top-auto md:z-auto md:flex-row md:shadow-none md:p-0 md:gap-1 ${
+              showNav ? 'top-[54px]' : 'top-[-300px]'
             }`}
           >
-            {navLinks.map(({ title, link }, index) => (
+            {navLinks.map(({ title, link }) => (
               <Link
-                key={index}
+                key={title}
                 href={link}
-                className="rounded-md px-3 py-2 text-slate-500 transition-colors duration-100 ease-linear hover:bg-gray-700 hover:text-white"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
               >
                 {title}
               </Link>
             ))}
           </div>
         </div>
-        {/* CTA button */}
-        <div>
-          <button
-            type="button"
-            className="flex items-center gap-2 rounded-lg border bg-amber-500 px-3.5 py-1.5 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-amber-600 active:scale-95 sm:px-5 sm:py-2"
+
+        {/* CTA */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/ajouter-entreprise"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
           >
-            <CircleFadingPlus size={18} />
-            <span>Submit</span>
-          </button>
+            + Ajouter mon entreprise
+          </Link>
+          <Link
+            href="/ajouter-entreprise"
+            className="sm:hidden inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white"
+          >
+            + Ajouter
+          </Link>
         </div>
       </div>
     </nav>
