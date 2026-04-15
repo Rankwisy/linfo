@@ -62,11 +62,8 @@ export function parseSeoSlug(slug: string): {
   subcategorySlug?: string
   citySlug: string
 } | null {
-  const { categories } = require('@/data/categories')
-  const { cities } = require('@/data/cities')
-
   // Find which city slug matches the end of the url
-  const matchedCity = cities.find((city: { slug: string }) =>
+  const matchedCity = citiesData.find((city) =>
     slug.endsWith(`-${city.slug}`) || slug === city.slug
   )
   if (!matchedCity) return null
@@ -74,7 +71,7 @@ export function parseSeoSlug(slug: string): {
   const prefix = slug.slice(0, slug.length - matchedCity.slug.length - 1)
 
   // Check if it's a top-level category
-  const matchedCategory = categories.find((c: { slug: string }) => c.slug === prefix)
+  const matchedCategory = categories.find((c) => c.slug === prefix)
   if (matchedCategory) {
     return {
       type: 'category-city',
@@ -85,7 +82,7 @@ export function parseSeoSlug(slug: string): {
 
   // Check if it's a subcategory
   for (const cat of categories) {
-    const sub = cat.subcategories.find((s: { slug: string }) => s.slug === prefix)
+    const sub = cat.subcategories.find((s) => s.slug === prefix)
     if (sub) {
       return {
         type: 'subcategory-city',

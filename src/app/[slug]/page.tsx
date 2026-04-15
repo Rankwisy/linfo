@@ -119,7 +119,7 @@ export default async function SeoPage(props: PageProps) {
   if (!city) notFound()
 
   let pageTitle = ''
-  let categorySlug = parsed.categorySlug
+  const categorySlug = parsed.categorySlug
   let subcategorySlug: string | undefined
 
   let businesses = []
