@@ -4,14 +4,15 @@ import Link from 'next/link'
 import { StarIcon, PhoneIcon, MailIcon, GlobeIcon, MapPinIcon } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import { businesses, getBusinessBySlug } from '@/data/businesses'
 import { getCategoryBySlug, getSubcategoryBySlug } from '@/data/categories'
 import { getCityBySlug } from '@/data/cities'
+import { getBusinessBySlugAsync, getAllBusinessSlugs, getRelatedBusinesses } from '@/services/businesses'
 
-export const dynamicParams = false
+export const revalidate = 3600 // ISR: rebuild pages every hour
 
 export async function generateStaticParams() {
-  return businesses.map((b) => ({ slug: b.slug }))
+  const slugs = await getAllBusinessSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 interface PageProps {
@@ -20,7 +21,7 @@ interface PageProps {
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { slug } = await props.params
-  const business = getBusinessBySlug(slug)
+  const business = await getBusinessBySlugAsync(slug)
   if (!business) return {}
 
   const city = getCityBySlug(business.city)
@@ -40,7 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 export default async function CompanyPage(props: PageProps) {
   const { slug } = await props.params
-  const business = getBusinessBySlug(slug)
+  const business = await getBusinessBySlugAsync(slug)
   if (!business) notFound()
 
   const city = getCityBySlug(business.city)
@@ -70,14 +71,7 @@ export default async function CompanyPage(props: PageProps) {
   }
 
   // Related businesses (same subcategory + city)
-  const related = businesses
-    .filter(
-      (b) =>
-        b.objectID !== business.objectID &&
-        b.subcategory === business.subcategory &&
-        b.city === business.city
-    )
-    .slice(0, 3)
+  const related = await getRelatedBusinesses(business.subcategory, business.city, business.objectID)
 
   return (
     <>

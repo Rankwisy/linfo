@@ -2,7 +2,6 @@
 import { SearchIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
-import { businesses } from '@/data/businesses'
 import { cities } from '@/data/cities'
 import { categories } from '@/data/categories'
 
@@ -39,23 +38,6 @@ export default function SearchBar() {
 
     const q = value.toLowerCase()
     const results: Suggestion[] = []
-
-    // Match businesses
-    businesses
-      .filter(
-        (b) =>
-          b.name.toLowerCase().includes(q) ||
-          b.subcategory.includes(q) ||
-          b.tags.some((t) => t.includes(q))
-      )
-      .slice(0, 3)
-      .forEach((b) =>
-        results.push({
-          label: `${b.name} — ${b.city}`,
-          href: `/company/${b.slug}`,
-          type: 'business',
-        })
-      )
 
     // Match category-city combos
     categories

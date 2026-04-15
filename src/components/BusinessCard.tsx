@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { StarIcon, PhoneIcon, MapPinIcon } from 'lucide-react'
-import type { Business } from '@/data/businesses'
+import type { Business } from '@/services/businesses'
 
 interface BusinessCardProps {
   business: Business

@@ -4,11 +4,12 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Sidebar from '@/components/Sidebar'
 import BusinessList from '@/components/BusinessList'
-import { getAllSeoPageSlugs, parseSeoSlug } from '@/services/businesses'
 import {
-  getBusinessesByCategoryAndCity,
-  getBusinessesBySubcategoryAndCity,
-} from '@/data/businesses'
+  getAllSeoPageSlugs,
+  parseSeoSlug,
+  getBusinessesForCategoryCity,
+  getBusinessesForSubcategoryCity,
+} from '@/services/businesses'
 import { getCategoryBySlug, getSubcategoryBySlug } from '@/data/categories'
 import { getCityBySlug } from '@/data/cities'
 import Link from 'next/link'
@@ -122,19 +123,19 @@ export default async function SeoPage(props: PageProps) {
   const categorySlug = parsed.categorySlug
   let subcategorySlug: string | undefined
 
-  let businesses = []
+  let businesses: import('@/services/businesses').Business[] = []
 
   if (parsed.type === 'category-city') {
     const cat = getCategoryBySlug(parsed.categorySlug)
     if (!cat) notFound()
     pageTitle = `${cat.name} à ${city.name}`
-    businesses = getBusinessesByCategoryAndCity(parsed.categorySlug, parsed.citySlug)
+    businesses = await getBusinessesForCategoryCity(parsed.categorySlug, parsed.citySlug)
   } else {
     const sub = getSubcategoryBySlug(parsed.subcategorySlug!)
     if (!sub) notFound()
     subcategorySlug = parsed.subcategorySlug
     pageTitle = `${sub.subcategory.name} à ${city.name}`
-    businesses = getBusinessesBySubcategoryAndCity(parsed.subcategorySlug!, parsed.citySlug)
+    businesses = await getBusinessesForSubcategoryCity(parsed.subcategorySlug!, parsed.citySlug)
   }
 
   const content = seoContent[slug] || {

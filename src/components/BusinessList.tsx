@@ -1,4 +1,4 @@
-import type { Business } from '@/data/businesses'
+import type { Business } from '@/services/businesses'
 import BusinessCard from './BusinessCard'
 
 interface BusinessListProps {

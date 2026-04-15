@@ -6,7 +6,7 @@ import SearchBar from '@/components/SearchBar'
 import CategoryGrid from '@/components/CategoryGrid'
 import CityGrid from '@/components/CityGrid'
 import BusinessCard from '@/components/BusinessCard'
-import { getFeaturedBusinesses } from '@/data/businesses'
+import { getFeaturedBusinessesAsync } from '@/services/businesses'
 
 export const metadata: Metadata = {
   title: 'linfo.be — Annuaire des entreprises locales en Belgique',
@@ -31,8 +31,8 @@ const popularSearches = [
   { label: 'Sport Gand', href: '/sport-gand' },
 ]
 
-export default function HomePage() {
-  const featured = getFeaturedBusinesses()
+export default async function HomePage() {
+  const featured = await getFeaturedBusinessesAsync()
 
   return (
     <>

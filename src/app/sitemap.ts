@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next'
-import { getAllSeoPageSlugs } from '@/services/businesses'
-import { businesses } from '@/data/businesses'
+import { getAllSeoPageSlugs, getAllBusinessSlugs } from '@/services/businesses'
 
 const BASE_URL = 'https://linfo.be'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const seoSlugs = getAllSeoPageSlugs()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [seoSlugs, businessSlugs] = await Promise.all([
+    Promise.resolve(getAllSeoPageSlugs()),
+    getAllBusinessSlugs(),
+  ])
   const now = new Date()
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -24,8 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  const companyPages: MetadataRoute.Sitemap = businesses.map((b) => ({
-    url: `${BASE_URL}/company/${b.slug}`,
+  const companyPages: MetadataRoute.Sitemap = businessSlugs.map((slug) => ({
+    url: `${BASE_URL}/company/${slug}`,
     lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.6,
