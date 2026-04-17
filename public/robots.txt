@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /ajouter-entreprise
+
+Sitemap: https://linfo.be/sitemap.xml
+
+# Algolia-Crawler-Verif: 126E8E2D4C0A93AE
