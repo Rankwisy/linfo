@@ -28,6 +28,16 @@ export const metadata: Metadata = {
     "linfo.be est l'annuaire des entreprises locales en Belgique. Transport, sport, construction et services professionnels.",
   metadataBase: new URL('https://linfo.be'),
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: [
+      { url: '/apple-icon', type: 'image/png', sizes: '180x180' },
+    ],
+    shortcut: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
