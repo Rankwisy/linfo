@@ -2,13 +2,14 @@
 import { SearchIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
+import { silos } from '@/data/silos'
 import { cities } from '@/data/cities'
-import { categories } from '@/data/categories'
 
 interface Suggestion {
   label: string
   href: string
-  type: 'business' | 'category' | 'city'
+  type: 'category' | 'city'
+  icon?: string
 }
 
 export default function SearchBar() {
@@ -39,28 +40,43 @@ export default function SearchBar() {
     const q = value.toLowerCase()
     const results: Suggestion[] = []
 
-    // Match category-city combos
-    categories
-      .filter((c) => c.name.toLowerCase().includes(q) || c.slug.includes(q))
-      .slice(0, 2)
-      .forEach((c) =>
-        results.push({
-          label: `${c.name} à Bruxelles`,
-          href: `/${c.slug}-bruxelles`,
-          type: 'category',
-        })
-      )
-
-    // Match subcategory-city
-    categories
-      .flatMap((c) => c.subcategories)
+    // Match silos
+    silos
       .filter((s) => s.name.toLowerCase().includes(q) || s.slug.includes(q))
       .slice(0, 2)
       .forEach((s) =>
         results.push({
           label: `${s.name} à Bruxelles`,
-          href: `/${s.slug}-bruxelles`,
+          href: `/bruxelles/${s.slug}`,
           type: 'category',
+          icon: s.icon,
+        })
+      )
+
+    // Match subcategories across all silos
+    silos
+      .flatMap((s) => s.subcategories.map((sub) => ({ silo: s, sub })))
+      .filter(({ sub }) => sub.name.toLowerCase().includes(q) || sub.slug.includes(q))
+      .slice(0, 3)
+      .forEach(({ silo, sub }) =>
+        results.push({
+          label: `${sub.name} à Bruxelles`,
+          href: `/bruxelles/${silo.slug}/${sub.slug}`,
+          type: 'category',
+          icon: silo.icon,
+        })
+      )
+
+    // Match cities
+    cities
+      .filter((c) => c.name.toLowerCase().includes(q) || c.slug.includes(q))
+      .slice(0, 2)
+      .forEach((c) =>
+        results.push({
+          label: c.name,
+          href: `/${c.slug}`,
+          type: 'city',
+          icon: '📍',
         })
       )
 
@@ -110,10 +126,11 @@ export default function SearchBar() {
               }}
               className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-gray-50 last:border-0"
             >
-              <span className="text-xs uppercase tracking-wide font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 shrink-0">
-                {s.type === 'business' ? 'Entreprise' : 'Catégorie'}
+              {s.icon && <span className="text-base shrink-0">{s.icon}</span>}
+              <span className="text-sm text-gray-700 flex-1">{s.label}</span>
+              <span className="text-xs uppercase tracking-wide font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 shrink-0">
+                {s.type === 'city' ? 'Ville' : 'Catégorie'}
               </span>
-              <span className="text-sm text-gray-700">{s.label}</span>
             </button>
           ))}
         </div>
