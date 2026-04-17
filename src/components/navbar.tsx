@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600">
               <MapPinIcon size={18} color="white" />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">
+            <span className="text-lg font-bold text-gray-900 tracking-tight leading-none">
               linfo<span className="text-blue-600">.be</span>
             </span>
           </Link>

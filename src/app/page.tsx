@@ -50,11 +50,11 @@ export default async function HomePage() {
         {/* dark overlay so text stays readable */}
         <div className="absolute inset-0 bg-blue-900/60" />
         <div className="relative mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
+          <h1 className="text-display text-balance text-white mb-4">
             Trouvez les meilleures entreprises{' '}
             <span className="text-yellow-300">en Belgique</span>
           </h1>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-blue-100">
+          <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-blue-100/90">
             L&apos;annuaire local de référence pour trouver transport, sport, construction et services professionnels près de chez vous.
           </p>
 
@@ -79,7 +79,7 @@ export default async function HomePage() {
         {/* Categories */}
         <section className="py-12">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">Parcourir par catégorie</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Parcourir par catégorie</h2>
             <Link href="/bruxelles" className="text-sm font-medium text-blue-600 hover:underline">
               Voir tout →
             </Link>
@@ -95,8 +95,8 @@ export default async function HomePage() {
         {/* Featured businesses */}
         <section className="py-12 border-t border-gray-100">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Entreprises en vedette</h2>
-            <p className="mt-1 text-gray-500 text-sm">Sélectionnées pour leur qualité de service</p>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Entreprises en vedette</h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-gray-500">Sélectionnées pour leur qualité de service</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((b) => (
@@ -108,15 +108,15 @@ export default async function HomePage() {
         {/* Popular cities */}
         <section className="py-12 border-t border-gray-100">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Villes populaires</h2>
-            <p className="mt-1 text-gray-500 text-sm">Explorez les entreprises par ville</p>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Villes populaires</h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-gray-500">Explorez les entreprises par ville</p>
           </div>
           <CityGrid />
         </section>
 
         {/* SEO internal links section */}
         <section className="py-12 border-t border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Recherches fréquentes</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Recherches fréquentes</h2>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { label: 'Transport Bruxelles', href: '/bruxelles/automobile-transport' },

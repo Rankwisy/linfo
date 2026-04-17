@@ -1,1 +1,162 @@
 @import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   THEME — extends Tailwind v4 design tokens (compiled away at build time)
+   ───────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /*
+    Wire next/font's CSS variable into Tailwind's font-sans utility.
+    The fallback stack closely matches Inter's metrics so the font-swap
+    (display:swap) causes near-zero visual jump → CLS ≈ 0.
+  */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Custom tokens */
+  --color-gray-950: #030712;
+  --color-brand:    #2563eb;
+  --prose-width:    68ch;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE — sensible defaults with lower specificity than Tailwind utilities
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer base {
+
+  /* ── Rendering ─────────────────────────────────────────────────────────── */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ── Fluid heading scale ───────────────────────────────────────────────── */
+  /*
+    clamp(MIN, FLUID, MAX) — grows with viewport, no JS, no media queries.
+    Negative letter-spacing on large Inter mirrors the clean, tight headings
+    in the reference design and looks more premium than default tracking.
+
+    H1 32 → 42px   hero headings, city landing pages
+    H2 24 → 32px   section headings ("Taxi à Bruxelles")
+    H3 18 → 22px   business card titles, subcategory labels
+    H4 17px         sidebar groups, filter labels
+  */
+  h1 {
+    font-size: clamp(2rem, 2.5vw + 1.2rem, 2.625rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-gray-950);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 1.8vw + 0.8rem, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: #111827;
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 0.8vw + 0.85rem, 1.375rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: #111827;
+  }
+
+  h4 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: #1f2937;
+  }
+
+  h5, h6 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #374151;
+  }
+
+  /* ── Body copy ─────────────────────────────────────────────────────────── */
+  /*
+    line-height 1.7 is the sweet spot for information-dense directory text.
+    Improves scan speed, dwell time, and satisfies WCAG 1.4.12 (≥1.5).
+    gray-700 is softer than pure black → reduces eye strain on long sessions.
+  */
+  p {
+    line-height: 1.7;
+    color: #374151;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Form elements inherit the body font */
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* ── Accessible focus ring ─────────────────────────────────────────────── */
+  :focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── Prose containers (business descriptions, FAQ, etc.) ──────────────── */
+  /*
+    68ch ≈ 65–70 characters per line — the typographic sweet spot.
+    Too wide (>80ch): eyes lose their place. Too narrow (<45ch): too choppy.
+    Only applied inside .prose so cards / nav / table cells are unaffected.
+  */
+  .prose p,
+  .prose li {
+    max-width: var(--prose-width);
+    line-height: 1.75;
+  }
+
+  .prose h2 { margin-top: 2.5em; margin-bottom: 0.75em; }
+  .prose h3 { margin-top: 2em;   margin-bottom: 0.5em;  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UTILITIES — custom composable classes
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+
+  /* Hero / display text (above H1) */
+  .text-display {
+    font-size: clamp(2.25rem, 4vw + 1rem, 3rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  /* Directory listing card title */
+  .text-listing-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  /* Muted metadata: city, phone, category badge text */
+  .text-meta {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #6b7280;
+  }
+
+  /* Prevent orphan words on narrow containers */
+  .text-balance { text-wrap: balance; }
+}

@@ -59,7 +59,7 @@ export default function BusinessCard({ business }: BusinessCardProps) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+            <h3 className="text-listing-title text-gray-900 group-hover:text-blue-600 transition-colors truncate">
               {name}
             </h3>
 
@@ -73,7 +73,7 @@ export default function BusinessCard({ business }: BusinessCardProps) {
               </span>
             </div>
 
-            <p className="mt-2 text-sm text-gray-500 line-clamp-2">{shortDescription}</p>
+            <p className="mt-2 text-sm leading-relaxed text-gray-500 line-clamp-2">{shortDescription}</p>
 
             <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
               {/* Rating */}
