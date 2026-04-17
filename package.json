@@ -9,17 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@supabase/supabase-js": "^2.103.1",
     "@tailwindcss/postcss": "^4.0.6",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.24",
+    "@types/papaparse": "^5.5.2",
     "algoliasearch": "^5.50.2",
     "classnames": "^2.5.1",
     "lucide-react": "^0.475.0",
     "next": "15.3.9",
+    "papaparse": "^5.5.3",
     "postcss": "^8.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.72.1",
     "react-instantsearch": "^7.29.0",
-    "tailwindcss": "^4.0.6"
+    "tailwindcss": "^4.0.6",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
