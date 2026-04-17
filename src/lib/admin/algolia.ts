@@ -14,17 +14,26 @@
 
 import { algoliasearch } from 'algoliasearch'
 
-const INDEX_NAME = process.env.ALGOLIA_INDEX_NAME ?? 'businesses'
+// Index name: prefer private var, fall back to public one (same value, both are safe)
+const INDEX_NAME =
+  process.env.ALGOLIA_INDEX_NAME ??
+  process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ??
+  'businesses'
+
+// App ID: prefer private var, fall back to public one (App ID is not sensitive)
+function getAppId() {
+  return process.env.ALGOLIA_APP_ID ?? process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
+}
 
 function getClient() {
-  const appId = process.env.ALGOLIA_APP_ID
+  const appId = getAppId()
   const adminKey = process.env.ALGOLIA_ADMIN_KEY
   if (!appId || !adminKey) return null
   return algoliasearch(appId, adminKey)
 }
 
 export function isAlgoliaConfigured() {
-  return !!(process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_ADMIN_KEY)
+  return !!(getAppId() && process.env.ALGOLIA_ADMIN_KEY)
 }
 
 /** Index or update one or more records. */

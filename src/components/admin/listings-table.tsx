@@ -32,9 +32,9 @@ import { deleteListing, bulkDeleteListings, bulkUpdateCategory } from '@/lib/adm
 // ─── Algolia search client (search-only key, safe client-side) ───────────────
 
 async function algoliaSearch(query: string): Promise<BusinessRow[]> {
-  const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
-  const searchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
-  const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX ?? 'businesses'
+  const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID ?? ''
+  const searchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY ?? ''
+  const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? 'businesses'
   if (!appId || !searchKey) return []
 
   try {
