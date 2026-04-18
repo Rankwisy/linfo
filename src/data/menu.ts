@@ -24,7 +24,6 @@ const NAV_LABELS: Record<string, string> = {
   'finance-juridique':         'Juridique',
   'sante-bien-etre':           'Santé',
   'immobilier-construction':   'Rénovation',
-  'energie-environnement':     'Énergie',
   'beaute-mode':               'Beauté',
   'automobile-transport':      'Transport',
   'services-professionnels':   'Business',
