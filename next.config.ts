@@ -3,8 +3,14 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
+      // Unsplash
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'plus.unsplash.com' },
+      // Google Places / Maps photos (Outscraper data: lh3–lh6)
+      { protocol: 'https', hostname: '**.googleusercontent.com' },
+      { protocol: 'https', hostname: 'maps.googleapis.com' },
+      // ImageKit (hero image + future uploads)
+      { protocol: 'https', hostname: 'ik.imagekit.io' },
     ],
   },
   generateEtags: true,
