@@ -22,6 +22,7 @@ import {
   BookOpenIcon,
   LeafIcon,
   CalendarIcon,
+  GemIcon,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -96,6 +97,11 @@ export const siloIconRegistry: Record<string, SiloIconDef> = {
     color: 'text-violet-600',
     bgColor: 'bg-violet-50',
   },
+  mariage: {
+    icon: GemIcon,
+    color: 'text-rose-600',
+    bgColor: 'bg-rose-50',
+  },
 }
 
 /* ── DB category registry (keyed by businesses.category value) ─────────────── */
@@ -117,6 +123,7 @@ export const categoryIconRegistry: Record<string, SiloIconDef> = {
   education:    siloIconRegistry['education-formation'],
   energie:      siloIconRegistry['energie-environnement'],
   evenementiel: siloIconRegistry['evenementiel-culture'],
+  mariage:      siloIconRegistry['mariage'],
 }
 
 /** Fallback when no match is found */

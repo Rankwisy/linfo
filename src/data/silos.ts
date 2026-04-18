@@ -18,6 +18,7 @@ export interface Silo {
 }
 
 export const silos: Silo[] = [
+  // ── 1. Automobile & Transport ──────────────────────────────────────────────
   {
     slug: 'automobile-transport',
     name: 'Automobile & Transport',
@@ -36,8 +37,8 @@ export const silos: Silo[] = [
       },
       {
         slug: 'location-autocar',
-        name: 'Location d\'autocar',
-        description: 'Location d\'autocars pour groupes, événements, excursions et transferts.',
+        name: "Location d'autocar",
+        description: "Location d'autocars pour groupes, événements, excursions et transferts.",
         dbCategory: 'transport',
         dbSubcategory: 'autocar',
       },
@@ -64,123 +65,116 @@ export const silos: Silo[] = [
       },
     ],
   },
+
+  // ── 2. Mariage (PRIORITÉ #1) ───────────────────────────────────────────────
+  {
+    slug: 'mariage',
+    name: 'Mariage',
+    icon: '💍',
+    color: 'text-rose-700',
+    bgColor: 'bg-rose-50',
+    description:
+      'Salles de mariage, traiteurs, photographes, wedding planners, robes de mariée et fleuristes en Belgique.',
+    dbCategory: 'mariage',
+    subcategories: [
+      {
+        slug: 'salle-mariage',
+        name: 'Salle de mariage',
+        description:
+          'Salles et domaines de réception pour mariages, fêtes et événements privés en Belgique.',
+        dbCategory: 'mariage',
+        dbSubcategory: 'salle-mariage',
+      },
+      {
+        slug: 'traiteur-mariage',
+        name: 'Traiteur mariage',
+        description:
+          'Traiteurs spécialisés mariage : repas gastronomiques, cocktails et buffets pour vos invités.',
+        dbCategory: 'mariage',
+        dbSubcategory: 'traiteur-mariage',
+      },
+      {
+        slug: 'photographe-mariage',
+        name: 'Photographe & Vidéaste',
+        description:
+          'Photographes et vidéastes professionnels pour immortaliser votre mariage en Belgique.',
+        dbCategory: 'mariage',
+        dbSubcategory: 'photographe-mariage',
+      },
+      {
+        slug: 'wedding-planner',
+        name: 'Wedding Planner',
+        description:
+          "Organisateurs de mariage pour coordonner chaque détail de votre jour J en toute sérénité.",
+        dbCategory: 'mariage',
+        dbSubcategory: 'wedding-planner',
+      },
+      {
+        slug: 'robe-mariee',
+        name: 'Robe de mariée & Costume',
+        description:
+          'Boutiques de robes de mariée et costumes sur-mesure pour mariés et témoins.',
+        dbCategory: 'mariage',
+        dbSubcategory: 'robe-mariee',
+      },
+      {
+        slug: 'fleuriste-mariage',
+        name: 'Fleuriste mariage',
+        description:
+          "Fleuristes créateurs de bouquets de mariée, décorations florales et centres de table.",
+        dbCategory: 'mariage',
+        dbSubcategory: 'fleuriste-mariage',
+      },
+    ],
+  },
+
+  // ── 3. Immobilier & Construction ───────────────────────────────────────────
   {
     slug: 'immobilier-construction',
     name: 'Immobilier & Construction',
     icon: '🏗️',
     color: 'text-orange-700',
     bgColor: 'bg-orange-50',
-    description: 'Entrepreneurs, rénovation, toiture, plomberie, électricité et agences immobilières.',
+    description:
+      'Entrepreneurs, rénovation, toiture, plomberie, électricité et agences immobilières.',
     dbCategory: 'construction',
     subcategories: [
       {
         slug: 'renovation',
         name: 'Rénovation',
-        description: 'Rénovation résidentielle et commerciale : cuisine, salle de bain, intérieur.',
+        description:
+          'Rénovation résidentielle et commerciale : cuisine, salle de bain, intérieur.',
         dbCategory: 'construction',
         dbSubcategory: 'renovation',
       },
       {
         slug: 'toiture',
         name: 'Toiture',
-        description: 'Couvreurs et spécialistes de toiture, réparation et pose de couvertures.',
+        description:
+          'Couvreurs et spécialistes de toiture, réparation et pose de couvertures.',
         dbCategory: 'construction',
         dbSubcategory: 'toiture',
       },
       {
         slug: 'plomberie',
         name: 'Plomberie',
-        description: 'Plombiers professionnels pour particuliers et entreprises, interventions urgentes.',
+        description:
+          'Plombiers professionnels pour particuliers et entreprises, interventions urgentes.',
         dbCategory: 'construction',
         dbSubcategory: 'plomberie',
       },
       {
         slug: 'electricite',
         name: 'Électricité',
-        description: 'Électriciens certifiés pour installations, rénovations et dépannages électriques.',
+        description:
+          'Électriciens certifiés pour installations, rénovations et dépannages électriques.',
         dbCategory: 'construction',
         dbSubcategory: 'electricite',
       },
     ],
   },
-  {
-    slug: 'sport-loisirs',
-    name: 'Sport & Loisirs',
-    icon: '⚽',
-    color: 'text-green-700',
-    bgColor: 'bg-green-50',
-    description: 'Salles de sport, clubs, piscines, tennis, football et activités sportives.',
-    dbCategory: 'sport',
-    subcategories: [
-      {
-        slug: 'gym-fitness',
-        name: 'Gym & Fitness',
-        description: 'Salles de sport, centres de fitness, musculation et cours collectifs.',
-        dbCategory: 'sport',
-        dbSubcategory: 'gym',
-      },
-      {
-        slug: 'piscine',
-        name: 'Piscine',
-        description: 'Piscines publiques et privées, aquafitness et natation.',
-        dbCategory: 'sport',
-        dbSubcategory: 'piscine',
-      },
-      {
-        slug: 'tennis',
-        name: 'Tennis',
-        description: 'Clubs de tennis, padel et terrains de jeu en Belgique.',
-        dbCategory: 'sport',
-        dbSubcategory: 'tennis',
-      },
-      {
-        slug: 'football',
-        name: 'Football',
-        description: 'Clubs de football, académies et infrastructure de jeu.',
-        dbCategory: 'sport',
-        dbSubcategory: 'football',
-      },
-    ],
-  },
-  {
-    slug: 'services-professionnels',
-    name: 'Services Professionnels',
-    icon: '🛠️',
-    color: 'text-purple-700',
-    bgColor: 'bg-purple-50',
-    description: 'Nettoyage, sécurité, informatique, comptabilité et services aux entreprises.',
-    dbCategory: 'services',
-    subcategories: [
-      {
-        slug: 'nettoyage',
-        name: 'Nettoyage',
-        description: 'Entreprises de nettoyage résidentiel, commercial et industriel.',
-        dbCategory: 'services',
-        dbSubcategory: 'nettoyage',
-      },
-      {
-        slug: 'securite-gardiennage',
-        name: 'Sécurité & Gardiennage',
-        description: 'Sociétés de gardiennage, surveillance et systèmes de sécurité.',
-        dbCategory: 'services',
-        dbSubcategory: 'securite',
-      },
-      {
-        slug: 'informatique',
-        name: 'Informatique & IT',
-        description: 'Support informatique, maintenance PC et services IT pour entreprises.',
-        dbCategory: 'services',
-        dbSubcategory: 'informatique',
-      },
-      {
-        slug: 'comptabilite',
-        name: 'Comptabilité & Finance',
-        description: 'Comptables, experts-comptables et conseillers fiscaux agréés.',
-        dbCategory: 'services',
-        dbSubcategory: 'comptabilite',
-      },
-    ],
-  },
+
+  // ── 4. Santé & Bien-être ──────────────────────────────────────────────────
   {
     slug: 'sante-bien-etre',
     name: 'Santé & Bien-être',
@@ -220,13 +214,140 @@ export const silos: Silo[] = [
       },
     ],
   },
+
+  // ── 5. Finance & Juridique ────────────────────────────────────────────────
+  {
+    slug: 'finance-juridique',
+    name: 'Finance & Juridique',
+    icon: '⚖️',
+    color: 'text-gray-700',
+    bgColor: 'bg-gray-50',
+    description: 'Avocats, notaires, conseillers financiers, assurances et banques.',
+    dbCategory: 'juridique',
+    subcategories: [
+      {
+        slug: 'avocat',
+        name: 'Avocat',
+        description: "Cabinets d'avocats en droit civil, pénal, commercial et familial.",
+        dbCategory: 'juridique',
+        dbSubcategory: 'avocat',
+      },
+      {
+        slug: 'notaire',
+        name: 'Notaire',
+        description: 'Études notariales pour actes immobiliers, successions et contrats.',
+        dbCategory: 'juridique',
+        dbSubcategory: 'notaire',
+      },
+      {
+        slug: 'assurance',
+        name: 'Assurance',
+        description: 'Courtiers en assurance auto, habitation, santé et vie.',
+        dbCategory: 'juridique',
+        dbSubcategory: 'assurance',
+      },
+      {
+        slug: 'conseil-financier',
+        name: 'Conseil Financier',
+        description: 'Conseillers en gestion de patrimoine et investissements.',
+        dbCategory: 'juridique',
+        dbSubcategory: 'conseil-financier',
+      },
+    ],
+  },
+
+  // ── 6. Énergie & Environnement ────────────────────────────────────────────
+  {
+    slug: 'energie-environnement',
+    name: 'Énergie & Environnement',
+    icon: '♻️',
+    color: 'text-emerald-700',
+    bgColor: 'bg-emerald-50',
+    description: 'Panneaux solaires, isolation, pompes à chaleur et éco-solutions.',
+    dbCategory: 'energie',
+    subcategories: [
+      {
+        slug: 'panneaux-solaires',
+        name: 'Panneaux Solaires',
+        description: 'Installation et entretien de panneaux photovoltaïques.',
+        dbCategory: 'energie',
+        dbSubcategory: 'panneaux-solaires',
+      },
+      {
+        slug: 'isolation',
+        name: 'Isolation',
+        description: "Isolation thermique, acoustique et économies d'énergie.",
+        dbCategory: 'energie',
+        dbSubcategory: 'isolation',
+      },
+      {
+        slug: 'pompe-chaleur',
+        name: 'Pompe à Chaleur',
+        description: "Installation et entretien de pompes à chaleur air-eau.",
+        dbCategory: 'energie',
+        dbSubcategory: 'pompe-chaleur',
+      },
+      {
+        slug: 'gestion-dechets',
+        name: 'Gestion des Déchets',
+        description: 'Collecte, tri et traitement des déchets professionnels.',
+        dbCategory: 'energie',
+        dbSubcategory: 'gestion-dechets',
+      },
+    ],
+  },
+
+  // ── 7. Services Professionnels ────────────────────────────────────────────
+  {
+    slug: 'services-professionnels',
+    name: 'Services Professionnels',
+    icon: '🛠️',
+    color: 'text-purple-700',
+    bgColor: 'bg-purple-50',
+    description:
+      'Nettoyage, sécurité, informatique, comptabilité et services aux entreprises.',
+    dbCategory: 'services',
+    subcategories: [
+      {
+        slug: 'nettoyage',
+        name: 'Nettoyage',
+        description: 'Entreprises de nettoyage résidentiel, commercial et industriel.',
+        dbCategory: 'services',
+        dbSubcategory: 'nettoyage',
+      },
+      {
+        slug: 'securite-gardiennage',
+        name: 'Sécurité & Gardiennage',
+        description: 'Sociétés de gardiennage, surveillance et systèmes de sécurité.',
+        dbCategory: 'services',
+        dbSubcategory: 'securite',
+      },
+      {
+        slug: 'informatique',
+        name: 'Informatique & IT',
+        description: 'Support informatique, maintenance PC et services IT pour entreprises.',
+        dbCategory: 'services',
+        dbSubcategory: 'informatique',
+      },
+      {
+        slug: 'comptabilite',
+        name: 'Comptabilité & Finance',
+        description: 'Comptables, experts-comptables et conseillers fiscaux agréés.',
+        dbCategory: 'services',
+        dbSubcategory: 'comptabilite',
+      },
+    ],
+  },
+
+  // ── 8. Restauration & Alimentation ───────────────────────────────────────
   {
     slug: 'restauration-alimentation',
     name: 'Restauration & Alimentation',
     icon: '🍽️',
     color: 'text-yellow-700',
     bgColor: 'bg-yellow-50',
-    description: 'Restaurants, traiteurs, livraison de repas, boulangeries et épiceries.',
+    description:
+      'Restaurants, traiteurs, livraison de repas, boulangeries et épiceries.',
     dbCategory: 'restauration',
     subcategories: [
       {
@@ -259,6 +380,8 @@ export const silos: Silo[] = [
       },
     ],
   },
+
+  // ── 9. Beauté & Mode ──────────────────────────────────────────────────────
   {
     slug: 'beaute-mode',
     name: 'Beauté & Mode',
@@ -266,29 +389,40 @@ export const silos: Silo[] = [
     color: 'text-pink-700',
     bgColor: 'bg-pink-50',
     description: 'Coiffeurs, instituts de beauté, spa, massage et boutiques de mode.',
+    dbCategory: 'beaute',
     subcategories: [
       {
         slug: 'coiffeur',
         name: 'Coiffeur',
         description: 'Salons de coiffure pour hommes et femmes.',
+        dbCategory: 'beaute',
+        dbSubcategory: 'coiffeur',
       },
       {
         slug: 'esthetique',
         name: 'Esthétique',
         description: 'Instituts de beauté, soins du visage et du corps.',
+        dbCategory: 'beaute',
+        dbSubcategory: 'esthetique',
       },
       {
         slug: 'spa',
         name: 'Spa & Massage',
         description: 'Centres de spa, massages et relaxation.',
+        dbCategory: 'beaute',
+        dbSubcategory: 'spa',
       },
       {
         slug: 'mode-vetements',
         name: 'Mode & Vêtements',
         description: 'Boutiques de mode, prêt-à-porter et accessoires.',
+        dbCategory: 'beaute',
+        dbSubcategory: 'mode-vetements',
       },
     ],
   },
+
+  // ── 10. Informatique & Technologies ──────────────────────────────────────
   {
     slug: 'informatique-technologies',
     name: 'Informatique & Technologies',
@@ -296,155 +430,163 @@ export const silos: Silo[] = [
     color: 'text-indigo-700',
     bgColor: 'bg-indigo-50',
     description: 'Développement web, cybersécurité, cloud et agences digitales.',
+    dbCategory: 'informatique',
     subcategories: [
       {
         slug: 'developpement-web',
         name: 'Développement Web',
         description: 'Développeurs, agences web et création de sites internet.',
+        dbCategory: 'informatique',
+        dbSubcategory: 'developpement-web',
       },
       {
         slug: 'cybersecurite',
         name: 'Cybersécurité',
         description: 'Experts en sécurité informatique et protection des données.',
+        dbCategory: 'informatique',
+        dbSubcategory: 'cybersecurite',
       },
       {
         slug: 'cloud-hosting',
         name: 'Cloud & Hébergement',
         description: 'Services cloud, hébergement web et infogérance.',
+        dbCategory: 'informatique',
+        dbSubcategory: 'cloud-hosting',
       },
       {
         slug: 'marketing-digital',
         name: 'Marketing Digital',
         description: 'Agences SEO, Google Ads, réseaux sociaux et e-mail marketing.',
+        dbCategory: 'informatique',
+        dbSubcategory: 'marketing-digital',
       },
     ],
   },
-  {
-    slug: 'finance-juridique',
-    name: 'Finance & Juridique',
-    icon: '⚖️',
-    color: 'text-gray-700',
-    bgColor: 'bg-gray-50',
-    description: 'Avocats, notaires, conseillers financiers, assurances et banques.',
-    dbCategory: 'juridique',
-    subcategories: [
-      {
-        slug: 'avocat',
-        name: 'Avocat',
-        description: 'Cabinets d\'avocats en droit civil, pénal, commercial et familial.',
-        dbCategory: 'juridique',
-        dbSubcategory: 'avocat',
-      },
-      {
-        slug: 'notaire',
-        name: 'Notaire',
-        description: 'Études notariales pour actes immobiliers, successions et contrats.',
-        dbCategory: 'juridique',
-        dbSubcategory: 'notaire',
-      },
-      {
-        slug: 'assurance',
-        name: 'Assurance',
-        description: 'Courtiers en assurance auto, habitation, santé et vie.',
-        dbCategory: 'juridique',
-        dbSubcategory: 'assurance',
-      },
-      {
-        slug: 'conseil-financier',
-        name: 'Conseil Financier',
-        description: 'Conseillers en gestion de patrimoine et investissements.',
-        dbCategory: 'juridique',
-        dbSubcategory: 'conseil-financier',
-      },
-    ],
-  },
+
+  // ── 11. Éducation & Formation ─────────────────────────────────────────────
   {
     slug: 'education-formation',
     name: 'Éducation & Formation',
     icon: '📚',
     color: 'text-cyan-700',
     bgColor: 'bg-cyan-50',
-    description: 'Cours particuliers, langues, formations professionnelles et crèches.',
+    description:
+      'Cours particuliers, langues, formations professionnelles et crèches.',
+    dbCategory: 'education',
     subcategories: [
       {
         slug: 'cours-particuliers',
         name: 'Cours Particuliers',
         description: 'Soutien scolaire à domicile pour tous niveaux.',
+        dbCategory: 'education',
+        dbSubcategory: 'cours-particuliers',
       },
       {
         slug: 'langues',
         name: 'Cours de Langues',
         description: 'Écoles de langues : anglais, néerlandais, français, arabe...',
+        dbCategory: 'education',
+        dbSubcategory: 'langues',
       },
       {
         slug: 'formation-professionnelle',
         name: 'Formation Professionnelle',
         description: 'Centres de formation continue et reconversion professionnelle.',
+        dbCategory: 'education',
+        dbSubcategory: 'formation-professionnelle',
       },
       {
         slug: 'creche-garderie',
         name: 'Crèche & Garderie',
-        description: 'Structures d\'accueil pour nourrissons et enfants.',
+        description: "Structures d'accueil pour nourrissons et enfants.",
+        dbCategory: 'education',
+        dbSubcategory: 'creche-garderie',
       },
     ],
   },
+
+  // ── 12. Sport & Loisirs ───────────────────────────────────────────────────
   {
-    slug: 'energie-environnement',
-    name: 'Énergie & Environnement',
-    icon: '♻️',
-    color: 'text-emerald-700',
-    bgColor: 'bg-emerald-50',
-    description: 'Panneaux solaires, isolation, pompes à chaleur et éco-solutions.',
+    slug: 'sport-loisirs',
+    name: 'Sport & Loisirs',
+    icon: '⚽',
+    color: 'text-green-700',
+    bgColor: 'bg-green-50',
+    description:
+      'Salles de sport, clubs, piscines, tennis, football et activités sportives.',
+    dbCategory: 'sport',
     subcategories: [
       {
-        slug: 'panneaux-solaires',
-        name: 'Panneaux Solaires',
-        description: 'Installation et entretien de panneaux photovoltaïques.',
+        slug: 'gym-fitness',
+        name: 'Gym & Fitness',
+        description: 'Salles de sport, centres de fitness, musculation et cours collectifs.',
+        dbCategory: 'sport',
+        dbSubcategory: 'gym',
       },
       {
-        slug: 'isolation',
-        name: 'Isolation',
-        description: 'Isolation thermique, acoustique et économies d\'énergie.',
+        slug: 'piscine',
+        name: 'Piscine',
+        description: 'Piscines publiques et privées, aquafitness et natation.',
+        dbCategory: 'sport',
+        dbSubcategory: 'piscine',
       },
       {
-        slug: 'pompe-chaleur',
-        name: 'Pompe à Chaleur',
-        description: 'Installation et entretien de pompes à chaleur air-eau.',
+        slug: 'tennis',
+        name: 'Tennis',
+        description: 'Clubs de tennis, padel et terrains de jeu en Belgique.',
+        dbCategory: 'sport',
+        dbSubcategory: 'tennis',
       },
       {
-        slug: 'gestion-dechets',
-        name: 'Gestion des Déchets',
-        description: 'Collecte, tri et traitement des déchets professionnels.',
+        slug: 'football',
+        name: 'Football',
+        description: 'Clubs de football, académies et infrastructure de jeu.',
+        dbCategory: 'sport',
+        dbSubcategory: 'football',
       },
     ],
   },
+
+  // ── 13. Événementiel & Culture ────────────────────────────────────────────
   {
     slug: 'evenementiel-culture',
     name: 'Événementiel & Culture',
     icon: '🎭',
     color: 'text-violet-700',
     bgColor: 'bg-violet-50',
-    description: 'Organisation d\'événements, lieux de réception, photographes et artistes.',
+    description:
+      "Organisation d'événements, lieux de réception, photographes et artistes.",
+    dbCategory: 'evenementiel',
     subcategories: [
       {
         slug: 'organisation-evenements',
-        name: 'Organisation d\'Événements',
+        name: "Organisation d'Événements",
         description: 'Agences événementielles pour mariages, séminaires et galas.',
+        dbCategory: 'evenementiel',
+        dbSubcategory: 'organisation-evenements',
       },
       {
         slug: 'lieu-reception',
         name: 'Lieu de Réception',
-        description: 'Salles, châteaux et domaines pour événements privés et professionnels.',
+        description:
+          'Salles, châteaux et domaines pour événements privés et professionnels.',
+        dbCategory: 'evenementiel',
+        dbSubcategory: 'lieu-reception',
       },
       {
         slug: 'photographe',
         name: 'Photographe',
-        description: 'Photographes professionnels pour mariages, portraits et événements.',
+        description:
+          'Photographes professionnels pour mariages, portraits et événements.',
+        dbCategory: 'evenementiel',
+        dbSubcategory: 'photographe',
       },
       {
         slug: 'dj-animation',
         name: 'DJ & Animation',
         description: 'DJs, animateurs et groupes musicaux pour soirées et réceptions.',
+        dbCategory: 'evenementiel',
+        dbSubcategory: 'dj-animation',
       },
     ],
   },
