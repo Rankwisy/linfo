@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { StarIcon, PhoneIcon, MailIcon, GlobeIcon, MapPinIcon, ChevronRightIcon } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -10,6 +9,8 @@ import { cities } from '@/data/cities'
 import { silos } from '@/data/silos'
 import { Icon } from '@/components/ui/icon'
 import { getSiloIcon } from '@/lib/icon-registry'
+import { BusinessAvatar } from '@/components/ui/business-avatar'
+import { HeroImage } from '@/components/ui/hero-image'
 import { getBusinessBySlugAsync, getAllBusinessSlugs, getRelatedBusinesses } from '@/services/businesses'
 
 export const revalidate = 3600
@@ -183,10 +184,7 @@ export default async function CompanyPage(props: PageProps) {
 
       {/* ── Hero image ─────────────────────────────────────────────────── */}
       {business.imageUrl && (
-        <div className="relative h-56 w-full sm:h-72 overflow-hidden bg-gray-100">
-          <Image src={business.imageUrl} alt={business.name} fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        </div>
+        <HeroImage src={business.imageUrl} alt={business.name} />
       )}
 
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
@@ -271,13 +269,13 @@ export default async function CompanyPage(props: PageProps) {
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="flex items-start gap-4">
                 {/* Avatar */}
-                <div className={`relative h-16 w-16 shrink-0 rounded-2xl overflow-hidden flex items-center justify-center ${business.imageUrl ? '' : bgColor}`}>
-                  {business.imageUrl ? (
-                    <Image src={business.imageUrl} alt={business.name} fill className="object-cover" />
-                  ) : (
-                    <Icon icon={icon} size="lg" className={color} />
-                  )}
-                </div>
+                <BusinessAvatar
+                  src={business.imageUrl}
+                  alt={business.name}
+                  fallbackIcon={icon}
+                  iconColor={color}
+                  bgColor={bgColor}
+                />
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4 flex-wrap">
