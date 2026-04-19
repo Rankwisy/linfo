@@ -1,45 +1,43 @@
 'use client'
 
 /**
- * BusinessAvatar — image with automatic icon fallback.
+ * BusinessAvatar — image with server-rendered icon fallback.
  *
  * Google Business / Outscraper image URLs are frequently unreliable:
  *   - Old Google+ logos  (/AAAAAAAAAAI/ pattern)  → often 403 / 404
  *   - Street View thumbs (streetviewpixels-pa.*)  → blocked when proxied
  *
- * Strategy:
- *   1. Skip known-broken patterns up front → render icon immediately
- *   2. For valid URLs: render <img> directly (no Next.js proxy) with onError
- *   3. On load error → swap to icon fallback
+ * IMPORTANT — RSC constraint:
+ *   React component functions are NOT serializable across the Server →
+ *   Client boundary. So we accept the fallback as `children` (JSX rendered
+ *   server-side and passed as RSC payload) instead of as a component prop.
  *
- * Why <img> not next/image?
- *   - next/image proxies the request through /_next/image which adds a
- *     Referer header that causes Google to return 403.
- *   - For user-uploaded logos we want the image as-is, no resize needed.
+ * Usage (in a Server Component):
+ *   <BusinessAvatar src={business.imageUrl} alt={name} bgColor={bgColor}>
+ *     <Icon icon={icon} size="lg" className={color} />
+ *   </BusinessAvatar>
  */
 
 import { useState } from 'react'
-import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 interface Props {
   src: string | null | undefined
   alt: string
-  /** Lucide icon component to render as fallback */
-  fallbackIcon: LucideIcon
-  /** Tailwind color class for the icon, e.g. text-rose-600 */
-  iconColor: string
-  /** Tailwind bg class for the icon container, e.g. bg-rose-50 */
+  /** Rendered server-side; shown when image is absent or fails */
+  children: ReactNode
+  /** Tailwind bg class applied to the fallback container, e.g. bg-rose-50 */
   bgColor: string
-  /** Container size class, defaults to "h-16 w-16" */
+  /** Container size + shape, defaults to "h-16 w-16 rounded-2xl" */
   sizeClass?: string
 }
 
-/** URL patterns that are almost always broken — skip them, show icon directly */
+/** URL patterns that are almost always broken — skip, show fallback directly */
 const BROKEN_PATTERNS = [
-  '/AAAAAAAAAAI/',       // Old Google+ / G Business profile icon format
-  's44-p-k-no',         // 44 px square → too small, often 404
-  'streetviewpixels',   // Street View thumbnails → 403 when proxied
-  'maps.gstatic.com',   // Static map tiles → not useful as a logo
+  '/AAAAAAAAAAI/',       // Old Google+ / G Business profile icon (dead)
+  's44-p-k-no',         // 44 px square thumbnail — too small, often 404
+  'streetviewpixels',   // Street View thumbnail — 403 when proxied
+  'maps.gstatic.com',   // Static map tiles — not useful as a logo
 ]
 
 function isBroken(url: string): boolean {
@@ -49,33 +47,25 @@ function isBroken(url: string): boolean {
 export function BusinessAvatar({
   src,
   alt,
-  fallbackIcon: FallbackIcon,
-  iconColor,
+  children,
   bgColor,
-  sizeClass = 'h-16 w-16',
+  sizeClass = 'h-16 w-16 rounded-2xl',
 }: Props) {
-  const [failed, setFailed] = useState(false)
+  const [failed, setFailed] = useState(() => !src || isBroken(src))
 
-  const showImage = src && !failed && !isBroken(src)
-
-  if (!showImage) {
+  if (failed) {
     return (
-      <div className={`${sizeClass} shrink-0 rounded-2xl flex items-center justify-center ${bgColor}`}>
-        <FallbackIcon
-          size={28}
-          strokeWidth={1.5}
-          className={iconColor}
-          aria-hidden
-        />
+      <div className={`${sizeClass} shrink-0 flex items-center justify-center ${bgColor}`}>
+        {children}
       </div>
     )
   }
 
   return (
-    <div className={`${sizeClass} shrink-0 rounded-2xl overflow-hidden`}>
+    <div className={`${sizeClass} shrink-0 overflow-hidden`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={src!}
         alt={alt}
         className="h-full w-full object-cover"
         onError={() => setFailed(true)}

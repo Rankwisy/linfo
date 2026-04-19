@@ -272,10 +272,10 @@ export default async function CompanyPage(props: PageProps) {
                 <BusinessAvatar
                   src={business.imageUrl}
                   alt={business.name}
-                  fallbackIcon={icon}
-                  iconColor={color}
                   bgColor={bgColor}
-                />
+                >
+                  <Icon icon={icon} size="lg" className={color} />
+                </BusinessAvatar>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4 flex-wrap">
