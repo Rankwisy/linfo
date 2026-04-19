@@ -2,25 +2,36 @@
 import { ArrowUp, MapPinIcon } from 'lucide-react'
 import Link from 'next/link'
 
+// ── Top categories linking to real city×silo pages ────────────────────────────
 const categories = [
-  { label: 'Transport Bruxelles', href: '/transport-bruxelles' },
-  { label: 'Sport Bruxelles', href: '/sport-bruxelles' },
-  { label: 'Construction Bruxelles', href: '/construction-bruxelles' },
-  { label: 'Services Bruxelles', href: '/services-bruxelles' },
+  { label: 'Avocats à Bruxelles',       href: '/bruxelles/finance-juridique/avocat' },
+  { label: 'Rénovation à Bruxelles',    href: '/bruxelles/immobilier-construction' },
+  { label: 'Mariage à Bruxelles',       href: '/bruxelles/mariage' },
+  { label: 'Santé à Bruxelles',         href: '/bruxelles/sante-bien-etre' },
+  { label: 'Informatique à Anvers',     href: '/anvers/informatique-technologies' },
+  { label: 'Événementiel à Gand',       href: '/gand/evenementiel-culture' },
+  { label: 'Juridique à Liège',         href: '/liege/finance-juridique' },
+  { label: 'Services à Anvers',         href: '/anvers/services-professionnels' },
 ]
 
-const cities = [
-  { label: 'Bruxelles', href: '/transport-bruxelles' },
-  { label: 'Anvers', href: '/transport-anvers' },
-  { label: 'Gand', href: '/transport-gand' },
-  { label: 'Liège', href: '/transport-liege' },
+// ── City hub pages ─────────────────────────────────────────────────────────────
+const cityLinks = [
+  { label: 'Bruxelles', href: '/bruxelles' },
+  { label: 'Anvers',    href: '/anvers' },
+  { label: 'Gand',      href: '/gand' },
+  { label: 'Liège',     href: '/liege' },
 ]
 
+// ── Popular keyword searches ───────────────────────────────────────────────────
 const topSearches = [
-  { label: 'Taxi Bruxelles', href: '/taxi-bruxelles' },
-  { label: 'Autocar Bruxelles', href: '/autocar-bruxelles' },
-  { label: 'Gym Bruxelles', href: '/gym-bruxelles' },
-  { label: 'Déménagement Bruxelles', href: '/demenagement-bruxelles' },
+  { label: 'Avocat Bruxelles',          href: '/bruxelles/finance-juridique/avocat' },
+  { label: 'Notaire Anvers',            href: '/anvers/finance-juridique/notaire' },
+  { label: 'Wedding Planner Bruxelles', href: '/bruxelles/mariage/wedding-planner' },
+  { label: 'Photographe Gand',          href: '/gand/evenementiel-culture/photographe' },
+  { label: 'Déménagement Anvers',       href: '/anvers/automobile-transport/demenagement' },
+  { label: 'Rénovation Liège',          href: '/liege/immobilier-construction/renovation' },
+  { label: 'Coiffeur Bruxelles',        href: '/bruxelles/beaute-mode/coiffeur' },
+  { label: 'Taxi Bruxelles',            href: '/bruxelles/automobile-transport/taxi' },
 ]
 
 const Footer = () => {
@@ -30,6 +41,7 @@ const Footer = () => {
     <footer className="bg-gray-900 text-gray-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4">
+
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -47,14 +59,11 @@ const Footer = () => {
 
           {/* Categories */}
           <div>
-            <h6 className="mb-4 font-semibold text-white">Catégories</h6>
+            <h6 className="mb-4 font-semibold text-white">Catégories populaires</h6>
             <ul className="space-y-2.5">
               {categories.map(({ label, href }) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
+                  <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -66,13 +75,10 @@ const Footer = () => {
           <div>
             <h6 className="mb-4 font-semibold text-white">Villes</h6>
             <ul className="space-y-2.5">
-              {cities.map(({ label, href }) => (
+              {cityLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
-                    {label}
+                  <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    📍 {label}
                   </Link>
                 </li>
               ))}
@@ -85,16 +91,14 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {topSearches.map(({ label, href }) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
+                  <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
+
         </div>
       </div>
 
