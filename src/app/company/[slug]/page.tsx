@@ -190,10 +190,82 @@ export default async function CompanyPage(props: PageProps) {
       )}
 
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+        <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+
+          {/* ── Right column: contact card — DOM-first so it shows at top on mobile ── */}
+          <div className="min-w-0 space-y-4 lg:order-last">
+            <div className="lg:sticky lg:top-6 space-y-4">
+
+              {/* Contact */}
+              <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <h2 className="mb-4 font-semibold text-gray-900 text-lg">Coordonnées</h2>
+                <div className="space-y-3">
+                  {business.phone && (
+                    <a href={`tel:${business.phone}`}
+                      className="flex w-full items-center gap-3 rounded-xl bg-blue-600 px-4 py-3 text-white font-semibold hover:bg-blue-700 transition-colors">
+                      <PhoneIcon size={18} strokeWidth={1.75} aria-hidden />
+                      {business.phone}
+                    </a>
+                  )}
+                  {business.email && (
+                    <a href={`mailto:${business.email}`}
+                      className="flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-gray-700 text-sm hover:border-blue-300 hover:text-blue-600 transition-colors">
+                      <MailIcon size={16} strokeWidth={1.75} aria-hidden />
+                      <span className="truncate">{business.email}</span>
+                    </a>
+                  )}
+                  {business.website && (
+                    <a href={business.website} target="_blank" rel="noopener noreferrer"
+                      className="flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-gray-700 text-sm hover:border-blue-300 hover:text-blue-600 transition-colors">
+                      <GlobeIcon size={16} strokeWidth={1.75} aria-hidden />
+                      Visiter le site web
+                    </a>
+                  )}
+                  {business.address && (
+                    <div className="flex items-start gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+                      <MapPinIcon size={16} strokeWidth={1.75} className="shrink-0 mt-0.5 text-blue-500" aria-hidden />
+                      <span>{business.address}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Category quick links */}
+              {silo && (
+                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                    Catégorie
+                  </p>
+                  <Link href={siloUrl}
+                    className="flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors">
+                    <Icon icon={icon} size="sm" className={color} />
+                    {silo.name}
+                  </Link>
+                  {siloSub && (
+                    <Link href={subcatUrl}
+                      className="mt-2 flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors">
+                      <ChevronRightIcon size={14} className="text-gray-400" />
+                      {siloSub.name}
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {/* CTA */}
+              <div className="rounded-2xl bg-blue-600 p-5 text-white text-center">
+                <p className="font-semibold mb-1">Vous êtes propriétaire?</p>
+                <p className="text-sm text-blue-100 mb-3">Revendiquez cette fiche gratuitement.</p>
+                <Link href="/ajouter-entreprise"
+                  className="block rounded-lg bg-white px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition-colors">
+                  Revendiquer
+                </Link>
+              </div>
+
+            </div>
+          </div>
 
           {/* ── Left column ──────────────────────────────────────────────── */}
-          <div className="space-y-6">
+          <div className="min-w-0 space-y-6">
 
             {/* Business header */}
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
@@ -394,77 +466,6 @@ export default async function CompanyPage(props: PageProps) {
 
           </div>
 
-          {/* ── Right column: contact card ────────────────────────────────── */}
-          <div className="space-y-4">
-            <div className="sticky top-6 space-y-4">
-
-              {/* Contact */}
-              <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-                <h2 className="mb-4 font-semibold text-gray-900 text-lg">Coordonnées</h2>
-                <div className="space-y-3">
-                  {business.phone && (
-                    <a href={`tel:${business.phone}`}
-                      className="flex w-full items-center gap-3 rounded-xl bg-blue-600 px-4 py-3 text-white font-semibold hover:bg-blue-700 transition-colors">
-                      <PhoneIcon size={18} strokeWidth={1.75} aria-hidden />
-                      {business.phone}
-                    </a>
-                  )}
-                  {business.email && (
-                    <a href={`mailto:${business.email}`}
-                      className="flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-gray-700 text-sm hover:border-blue-300 hover:text-blue-600 transition-colors">
-                      <MailIcon size={16} strokeWidth={1.75} aria-hidden />
-                      <span className="truncate">{business.email}</span>
-                    </a>
-                  )}
-                  {business.website && (
-                    <a href={business.website} target="_blank" rel="noopener noreferrer"
-                      className="flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-gray-700 text-sm hover:border-blue-300 hover:text-blue-600 transition-colors">
-                      <GlobeIcon size={16} strokeWidth={1.75} aria-hidden />
-                      Visiter le site web
-                    </a>
-                  )}
-                  {business.address && (
-                    <div className="flex items-start gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm text-gray-600">
-                      <MapPinIcon size={16} strokeWidth={1.75} className="shrink-0 mt-0.5 text-blue-500" aria-hidden />
-                      <span>{business.address}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Category quick links */}
-              {silo && (
-                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                    Catégorie
-                  </p>
-                  <Link href={siloUrl}
-                    className="flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors">
-                    <Icon icon={icon} size="sm" className={color} />
-                    {silo.name}
-                  </Link>
-                  {siloSub && (
-                    <Link href={subcatUrl}
-                      className="mt-2 flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors">
-                      <ChevronRightIcon size={14} className="text-gray-400" />
-                      {siloSub.name}
-                    </Link>
-                  )}
-                </div>
-              )}
-
-              {/* CTA */}
-              <div className="rounded-2xl bg-blue-600 p-5 text-white text-center">
-                <p className="font-semibold mb-1">Vous êtes propriétaire?</p>
-                <p className="text-sm text-blue-100 mb-3">Revendiquez cette fiche gratuitement.</p>
-                <Link href="/ajouter-entreprise"
-                  className="block rounded-lg bg-white px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition-colors">
-                  Revendiquer
-                </Link>
-              </div>
-
-            </div>
-          </div>
         </div>
       </main>
 
