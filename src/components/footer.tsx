@@ -1,38 +1,6 @@
 'use client'
-import { ArrowUp, MapPinIcon } from 'lucide-react'
+import { ArrowUp, MapPinIcon, MailIcon } from 'lucide-react'
 import Link from 'next/link'
-
-// ── Top categories linking to real city×silo pages ────────────────────────────
-const categories = [
-  { label: 'Avocats à Bruxelles',       href: '/bruxelles/finance-juridique/avocat' },
-  { label: 'Rénovation à Bruxelles',    href: '/bruxelles/immobilier-construction' },
-  { label: 'Mariage à Bruxelles',       href: '/bruxelles/mariage' },
-  { label: 'Santé à Bruxelles',         href: '/bruxelles/sante-bien-etre' },
-  { label: 'Informatique à Anvers',     href: '/anvers/informatique-technologies' },
-  { label: 'Événementiel à Gand',       href: '/gand/evenementiel-culture' },
-  { label: 'Juridique à Liège',         href: '/liege/finance-juridique' },
-  { label: 'Services à Anvers',         href: '/anvers/services-professionnels' },
-]
-
-// ── City hub pages ─────────────────────────────────────────────────────────────
-const cityLinks = [
-  { label: 'Bruxelles', href: '/bruxelles' },
-  { label: 'Anvers',    href: '/anvers' },
-  { label: 'Gand',      href: '/gand' },
-  { label: 'Liège',     href: '/liege' },
-]
-
-// ── Popular keyword searches ───────────────────────────────────────────────────
-const topSearches = [
-  { label: 'Avocat Bruxelles',          href: '/bruxelles/finance-juridique/avocat' },
-  { label: 'Notaire Anvers',            href: '/anvers/finance-juridique/notaire' },
-  { label: 'Wedding Planner Bruxelles', href: '/bruxelles/mariage/wedding-planner' },
-  { label: 'Photographe Gand',          href: '/gand/evenementiel-culture/photographe' },
-  { label: 'Déménagement Anvers',       href: '/anvers/automobile-transport/demenagement' },
-  { label: 'Rénovation Liège',          href: '/liege/immobilier-construction/renovation' },
-  { label: 'Coiffeur Bruxelles',        href: '/bruxelles/beaute-mode/coiffeur' },
-  { label: 'Taxi Bruxelles',            href: '/bruxelles/automobile-transport/taxi' },
-]
 
 const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -42,7 +10,7 @@ const Footer = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4">
 
-          {/* Brand */}
+          {/* ── Col 1: Brand ───────────────────────────────────────────── */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600">
@@ -57,11 +25,17 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Categories */}
+          {/* ── Col 2: About ───────────────────────────────────────────── */}
           <div>
-            <h6 className="mb-4 font-semibold text-white">Catégories populaires</h6>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">About</h6>
             <ul className="space-y-2.5">
-              {categories.map(({ label, href }) => (
+              {[
+                { label: 'Home',       href: '/' },
+                { label: 'Categories', href: '/bruxelles' },
+                { label: 'About Us',   href: '#' },
+                { label: 'FAQs',       href: '#' },
+                { label: 'Contact Us', href: '#' },
+              ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
                     {label}
@@ -71,37 +45,49 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Cities */}
+          {/* ── Col 3: Quick Links ─────────────────────────────────────── */}
           <div>
-            <h6 className="mb-4 font-semibold text-white">Villes</h6>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Quick Links</h6>
             <ul className="space-y-2.5">
-              {cityLinks.map(({ label, href }) => (
-                <li key={label}>
-                  <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    📍 {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Top searches */}
-          <div>
-            <h6 className="mb-4 font-semibold text-white">Recherches populaires</h6>
-            <ul className="space-y-2.5">
-              {topSearches.map(({ label, href }) => (
+              {[
+                { label: 'Add Your Business',   href: '/ajouter-entreprise' },
+                { label: 'Blog',                href: '#' },
+                { label: 'Write for Us',        href: '#' },
+                { label: 'Terms and Conditions',href: '#' },
+                { label: 'Site Map',            href: '/sitemap.xml' },
+              ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
                     {label}
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* ── Col 4: Get in Touch ────────────────────────────────────── */}
+          <div>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Get in Touch</h6>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="mailto:info@linfo.be"
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <MailIcon size={14} className="shrink-0 text-blue-400" />
+                  info@linfo.be
+                </a>
+              </li>
+              <li className="text-sm text-gray-400 leading-relaxed">
+                Serving communities<br />worldwide
+              </li>
             </ul>
           </div>
 
         </div>
       </div>
 
+      {/* ── Bottom bar ─────────────────────────────────────────────────── */}
       <div className="relative border-t border-gray-800 bg-gray-900">
         <button
           onClick={scrollToTop}
