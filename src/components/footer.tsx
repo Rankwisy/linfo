@@ -25,16 +25,16 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* ── Col 2: About ───────────────────────────────────────────── */}
+          {/* ── Col 2: À propos ────────────────────────────────────────── */}
           <div>
-            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">About</h6>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">À propos</h6>
             <ul className="space-y-2.5">
               {[
-                { label: 'Home',       href: '/' },
-                { label: 'Categories', href: '/bruxelles' },
-                { label: 'About Us',   href: '#' },
-                { label: 'FAQs',       href: '#' },
-                { label: 'Contact Us', href: '#' },
+                { label: 'Accueil',       href: '/' },
+                { label: 'Catégories',    href: '/bruxelles' },
+                { label: 'Qui sommes-nous', href: '#' },
+                { label: 'FAQ',           href: '#' },
+                { label: 'Contactez-nous',href: '#' },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
@@ -45,16 +45,16 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ── Col 3: Quick Links ─────────────────────────────────────── */}
+          {/* ── Col 3: Liens utiles ────────────────────────────────────── */}
           <div>
-            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Quick Links</h6>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Liens utiles</h6>
             <ul className="space-y-2.5">
               {[
-                { label: 'Add Your Business',   href: '/ajouter-entreprise' },
-                { label: 'Blog',                href: '#' },
-                { label: 'Write for Us',        href: '#' },
-                { label: 'Terms and Conditions',href: '#' },
-                { label: 'Site Map',            href: '/sitemap.xml' },
+                { label: 'Ajouter mon entreprise', href: '/ajouter-entreprise' },
+                { label: 'Blog',                   href: '#' },
+                { label: 'Écrire pour nous',       href: '#' },
+                { label: 'Conditions d\'utilisation', href: '#' },
+                { label: 'Plan du site',           href: '/sitemap.xml' },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-sm text-gray-400 hover:text-white transition-colors">
@@ -65,9 +65,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ── Col 4: Get in Touch ────────────────────────────────────── */}
+          {/* ── Col 4: Nous contacter ──────────────────────────────────── */}
           <div>
-            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Get in Touch</h6>
+            <h6 className="mb-4 font-semibold text-white uppercase tracking-wider text-xs">Nous contacter</h6>
             <ul className="space-y-3">
               <li>
                 <a
@@ -79,7 +79,7 @@ const Footer = () => {
                 </a>
               </li>
               <li className="text-sm text-gray-400 leading-relaxed">
-                Serving communities<br />worldwide
+                Au service des communautés<br />partout dans le monde
               </li>
             </ul>
           </div>
