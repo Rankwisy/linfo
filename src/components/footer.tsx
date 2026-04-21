@@ -51,7 +51,7 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {[
                 { label: 'Ajouter mon entreprise', href: '/ajouter-entreprise' },
-                { label: 'Blog',                   href: '#' },
+                { label: 'Blog',                   href: '/blog' },
                 { label: 'Écrire pour nous',       href: '#' },
                 { label: 'Conditions d\'utilisation', href: '#' },
                 { label: 'Plan du site',           href: '/sitemap.xml' },

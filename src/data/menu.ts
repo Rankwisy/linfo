@@ -23,7 +23,6 @@ const NAV_LABELS: Record<string, string> = {
   'mariage':                   'Mariage',
   'finance-juridique':         'Juridique',
   'sante-bien-etre':           'Santé',
-  'immobilier-construction':   'Rénovation',
   'beaute-mode':               'Beauté',
   'automobile-transport':      'Transport',
   'services-professionnels':   'Business',
