@@ -114,6 +114,101 @@ export default async function HomePage() {
           <CityGrid />
         </section>
 
+        {/* Blog */}
+        <section className="py-12 border-t border-gray-100">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Blog</h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-gray-500">
+              Conseils, guides et actualités pour les professionnels et particuliers en Belgique
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-3">
+
+            {/* Article 1 */}
+            <article className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden hover:shadow-md hover:border-blue-200 transition-all">
+              <div className="h-44 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+                <span className="text-5xl">⚖️</span>
+              </div>
+              <div className="flex flex-col flex-1 p-5">
+                <span className="mb-2 inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-600">
+                  Juridique
+                </span>
+                <h3 className="mb-2 font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  Comment choisir un avocat en Belgique : guide complet 2025
+                </h3>
+                <p className="text-sm text-gray-500 flex-1 leading-relaxed">
+                  Droit civil, pénal ou commercial — découvrez les critères essentiels pour trouver l&apos;avocat adapté à votre situation et à votre budget.
+                </p>
+                <Link
+                  href="#"
+                  className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Lire l&apos;article →
+                </Link>
+              </div>
+            </article>
+
+            {/* Article 2 */}
+            <article className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden hover:shadow-md hover:border-blue-200 transition-all">
+              <div className="h-44 bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center">
+                <span className="text-5xl">💍</span>
+              </div>
+              <div className="flex flex-col flex-1 p-5">
+                <span className="mb-2 inline-block rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-medium text-rose-600">
+                  Mariage
+                </span>
+                <h3 className="mb-2 font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  Organiser son mariage en Belgique : budget, prestataires et conseils
+                </h3>
+                <p className="text-sm text-gray-500 flex-1 leading-relaxed">
+                  Salle, traiteur, photographe, fleuriste — tout ce qu&apos;il faut savoir pour préparer le jour J sans stress et dans les meilleures conditions.
+                </p>
+                <Link
+                  href="#"
+                  className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Lire l&apos;article →
+                </Link>
+              </div>
+            </article>
+
+            {/* Article 3 */}
+            <article className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden hover:shadow-md hover:border-blue-200 transition-all">
+              <div className="h-44 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
+                <span className="text-5xl">🏗️</span>
+              </div>
+              <div className="flex flex-col flex-1 p-5">
+                <span className="mb-2 inline-block rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600">
+                  Rénovation
+                </span>
+                <h3 className="mb-2 font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  Rénover sa maison en Belgique : primes, entrepreneurs et pièges à éviter
+                </h3>
+                <p className="text-sm text-gray-500 flex-1 leading-relaxed">
+                  Isolation, toiture, électricité — profitez des aides régionales et choisissez les bons artisans grâce à notre guide pratique.
+                </p>
+                <Link
+                  href="#"
+                  className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Lire l&apos;article →
+                </Link>
+              </div>
+            </article>
+
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="#"
+              className="inline-block rounded-full border border-blue-200 px-6 py-2.5 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors"
+            >
+              Voir tous les articles →
+            </Link>
+          </div>
+        </section>
+
         {/* SEO internal links section */}
         <section className="py-12 border-t border-gray-100">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6 text-center">Recherches fréquentes</h2>
