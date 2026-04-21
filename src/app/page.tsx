@@ -78,9 +78,9 @@ export default async function HomePage() {
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Categories */}
         <section className="py-12">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Parcourir par catégorie</h2>
-            <Link href="/bruxelles" className="text-sm font-medium text-blue-600 hover:underline">
+            <Link href="/bruxelles" className="mt-2 inline-block text-sm font-medium text-blue-600 hover:underline">
               Voir tout →
             </Link>
           </div>
@@ -94,7 +94,7 @@ export default async function HomePage() {
 
         {/* Featured businesses */}
         <section className="py-12 border-t border-gray-100">
-          <div className="mb-6">
+          <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Entreprises en vedette</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-gray-500">Sélectionnées pour leur qualité de service</p>
           </div>
@@ -107,7 +107,7 @@ export default async function HomePage() {
 
         {/* Popular cities */}
         <section className="py-12 border-t border-gray-100">
-          <div className="mb-6">
+          <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Villes populaires</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-gray-500">Explorez les entreprises par ville</p>
           </div>
@@ -116,7 +116,7 @@ export default async function HomePage() {
 
         {/* SEO internal links section */}
         <section className="py-12 border-t border-gray-100">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Recherches fréquentes</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6 text-center">Recherches fréquentes</h2>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { label: 'Transport Bruxelles', href: '/bruxelles/automobile-transport' },
