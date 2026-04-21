@@ -98,8 +98,8 @@ export default async function HomePage() {
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Entreprises en vedette</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-gray-500">Sélectionnées pour leur qualité de service</p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((b) => (
+          <div className="grid gap-4 sm:grid-cols-3">
+            {featured.slice(0, 3).map((b) => (
               <BusinessCard key={b.objectID} business={b} />
             ))}
           </div>

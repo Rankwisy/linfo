@@ -8,11 +8,10 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ citySlug = 'bruxelles' }: CategoryGridProps) {
-  // Show first 4 silos that have DB data (active silos), then fill with others
-  const featured = silos.slice(0, 4)
+  const featured = silos.slice(0, 12)
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {featured.map((silo) => {
         const { icon, color, bgColor } = getSiloIcon(silo.slug)
         return (
