@@ -233,6 +233,14 @@ export default function Navbar() {
             ))}
           </div>
 
+          {/* Blog link — desktop */}
+          <Link
+            href="/blog"
+            className="hidden lg:flex flex-shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[11.5px] font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+          >
+            ✍️ Blog
+          </Link>
+
           {/* CTA */}
           <Link
             href="/ajouter-entreprise"
@@ -396,6 +404,17 @@ export default function Navbar() {
               </div>
             )
           })}
+
+          {/* Blog link — mobile */}
+          <div className="px-3 pb-1">
+            <Link
+              href="/blog"
+              onClick={closeMobile}
+              className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              ✍️ Blog
+            </Link>
+          </div>
 
           {/* Bottom CTA */}
           <div className="p-4">

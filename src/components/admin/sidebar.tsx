@@ -10,12 +10,14 @@ import {
   SettingsIcon,
   BuildingIcon,
   ExternalLinkIcon,
+  BookOpenIcon,
 } from 'lucide-react'
 
 const NAV = [
   { href: '/admin',               label: 'Dashboard',      icon: LayoutDashboardIcon, exact: true },
   { href: '/admin/listings',      label: 'Listings',       icon: ListIcon },
   { href: '/admin/listings/new',  label: 'Add Listing',    icon: PlusCircleIcon },
+  { href: '/admin/blog',          label: 'Blog',           icon: BookOpenIcon },
   { href: '/admin/import',        label: 'Import / Export',icon: UploadIcon },
   { href: '/admin/settings',      label: 'Settings',       icon: SettingsIcon },
 ]
