@@ -181,7 +181,7 @@ export default function Navbar() {
             aria-label="linfo.be — accueil"
           >
             <img
-              src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/44f70737596c5db150d1454e88ddf48d822fc97dfaf83877e04c2c0163c03c17.jpeg?updatedAt=1777646128565"
+              src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/transparent%20logo%20linfo%20be.png?updatedAt=1777684673764"
               alt="linfo.be"
               className="h-9 w-auto"
             />
