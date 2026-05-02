@@ -1,5 +1,5 @@
 'use client'
-import { ArrowUp, MapPinIcon, MailIcon } from 'lucide-react'
+import { ArrowUp, MailIcon } from 'lucide-react'
 import Link from 'next/link'
 
 const Footer = () => {
@@ -12,13 +12,12 @@ const Footer = () => {
 
           {/* ── Col 1: Brand ───────────────────────────────────────────── */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600">
-                <MapPinIcon size={16} color="white" />
-              </div>
-              <span className="text-xl font-bold text-white tracking-tight">
-                linfo<span className="text-blue-400">.be</span>
-              </span>
+            <Link href="/" className="inline-block mb-4">
+              <img
+                src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/44f70737596c5db150d1454e88ddf48d822fc97dfaf83877e04c2c0163c03c17.jpeg?updatedAt=1777646128565"
+                alt="linfo.be"
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
               L&apos;annuaire des entreprises locales en Belgique. Trouvez rapidement les meilleurs prestataires près de chez vous.

@@ -177,15 +177,14 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex-shrink-0 flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex-shrink-0 flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             aria-label="linfo.be — accueil"
           >
-            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-blue-600">
-              <MapPinIcon size={15} color="white" strokeWidth={2.5} />
-            </div>
-            <span className="text-[15px] font-bold text-gray-900 tracking-tight leading-none">
-              linfo<span className="text-blue-600">.be</span>
-            </span>
+            <img
+              src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/44f70737596c5db150d1454e88ddf48d822fc97dfaf83877e04c2c0163c03c17.jpeg?updatedAt=1777646128565"
+              alt="linfo.be"
+              className="h-9 w-auto"
+            />
           </Link>
 
           {/* Desktop tab bar */}

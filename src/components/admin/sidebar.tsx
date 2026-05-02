@@ -8,7 +8,6 @@ import {
   PlusCircleIcon,
   UploadIcon,
   SettingsIcon,
-  BuildingIcon,
   ExternalLinkIcon,
   BookOpenIcon,
 } from 'lucide-react'
@@ -30,9 +29,11 @@ export default function AdminSidebar() {
       {/* Brand */}
       <div className="px-5 py-4 border-b border-slate-700/50">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center shrink-0">
-            <BuildingIcon size={15} className="text-white" />
-          </div>
+          <img
+            src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/44f70737596c5db150d1454e88ddf48d822fc97dfaf83877e04c2c0163c03c17.jpeg?updatedAt=1777646128565"
+            alt="linfo.be"
+            className="h-8 w-8 rounded-lg object-cover shrink-0"
+          />
           <div>
             <div className="text-white font-bold text-sm leading-none">Linfo.be</div>
             <div className="text-slate-400 text-xs mt-0.5">Admin Panel</div>
