@@ -14,7 +14,7 @@ const Footer = () => {
           <div>
             <Link href="/" className="inline-block mb-4">
               <img
-                src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/transparent%20logo%20linfo%20be.png?updatedAt=1777684673764"
+                src="https://ik.imagekit.io/9nqnnkvba/favicon-linfo-be/6fafba5e6b6e2dda814e277d5de387bb69917995821459dbfa1297212a9cbd2c.jpeg?updatedAt=1777646239027"
                 alt="linfo.be"
                 className="h-10 w-auto"
               />
